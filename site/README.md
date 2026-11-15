@@ -1,6 +1,6 @@
 # Project page source
 
-Implementation is pending. No page is deployed and no Pages workflow is enabled.
+The static page is implemented. No page is deployed and no Pages workflow is enabled. Paired 3D video captures remain pending and are declared in data/media.json; recorded trajectories are available separately.
 
 The intended site is buildless HTML, CSS and JavaScript with local JSON data. It will explain the task and training pipeline, present simulation illustrations, and compare paired evaluation conditions. It must distinguish recorded metrics, historical illustrations and newly captured videos.
 

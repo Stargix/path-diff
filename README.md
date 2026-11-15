@@ -4,7 +4,7 @@ Diffusion policies for route, posture and timing control.
 
 We collect motion from pretrained walking and crouching controllers, relabel the achieved motion, train a diffusion policy by imitation and refine it with DPPO. The resulting controller receives route geometry, desired body height and a route-average speed, without a gait identifier.
 
-This repository is being prepared as a focused project release. It currently contains presentation assets and a snapshot of development evaluation results, not a standalone training package or a deployed website.
+This repository contains the static project page and a snapshot of development evaluation results. The page has route/model selection, recorded trajectory inspection and filtered result tables. Paired 3D video captures are pending; missing clips are explicitly marked. It is not yet a standalone training package or a deployed website.
 
 ## Contents
 
