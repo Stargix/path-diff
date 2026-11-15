@@ -1,0 +1,9 @@
+{
+  "name": "Path Diff",
+  "short_name": "Path Diff",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f7f8fa",
+  "theme_color": "#f7f8fa",
+  "icons": []
+}
