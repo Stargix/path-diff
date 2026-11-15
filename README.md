@@ -1,6 +1,6 @@
-# Path-Conditioned Locomotion on SOLO12
+# Path Diff
 
-Route, posture and timing control from existing locomotion demonstrations.
+Diffusion policies for route, posture and timing control.
 
 We collect motion from pretrained walking and crouching controllers, relabel the achieved motion, train a diffusion policy by imitation and refine it with DPPO. The resulting controller receives route geometry, desired body height and a route-average speed, without a gait identifier.
 
