@@ -33,11 +33,15 @@ async function start() {
   function drawSignals(s, time) {
     const w=760,h=205,l=48,r=15,t=12,b=30, xMax=24; const x=v=>l+v/xMax*(w-l-r);
     const chart=svg("svg",{viewBox:`0 0 ${w} ${h}`,role:"img","aria-label":"Required and measured body height over simulated time"});
-    const heights=[...s.reference_metadata.height_schedule_m.map(v=>v[1]),...s.clips.map(c=>traceMap.get(`${s.id}|${c.actor_id}`).height_m).flat()];
+    const md=s.reference_metadata, base=md.path_height_m;
+    let req=[];
+    if(md.height_profile==="constant") req=[[0,base],[4,base]];
+    else if(md.height_profile==="repeated") req=md.height_schedule_m.map((v,i)=>[i*.8,v]);
+    else { const f=md.transition_fraction??.5, low=.1705, high=.2932; const start=md.transition_direction==="crouch_to_walk"?low:high, end=start===high?low:high; req=[[0,start],[f*4,start],[f*4,end],[4,end]]; }
+    const heights=[...req.map(v=>v[1]),...s.clips.map(c=>traceMap.get(`${s.id}|${c.actor_id}`).height_m).flat()];
     const lo=Math.min(...heights)-.025,hi=Math.max(...heights)+.025,y=v=>h-b-(v-lo)/(hi-lo)*(h-t-b);
     for(let k=0;k<4;k++){const gy=t+k*(h-t-b)/3;chart.append(svg("line",{x1:l,y1:gy,x2:w-r,y2:gy,stroke:"#e8ebef"}));}
-    const req=s.reference_metadata.height_schedule_m; let last=0;
-    const reqPts=[[0,req[0][1]]]; for(const [dist,height] of req.slice(1)){reqPts.push([dist/4*xMax,reqPts.at(-1)[1]],[dist/4*xMax,height]);last=dist;}
+    const reqPts=[[0,req[0][1]]]; for(const [dist,height] of req.slice(1)){reqPts.push([dist/4*xMax,reqPts.at(-1)[1]],[dist/4*xMax,height]);}
     reqPts.push([xMax,req.at(-1)[1]]);
     const line=pts=>pts.map((p,i)=>`${i?"L":"M"}${x(p[0])},${y(p[1])}`).join(" ");
     chart.append(svg("path",{d:line(reqPts),fill:"none",stroke:"#8b949f","stroke-width":2,"stroke-dasharray":"6 5"}));
