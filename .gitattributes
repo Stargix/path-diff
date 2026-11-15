@@ -4,3 +4,4 @@
 *.ps1 text eol=crlf
 # Preserve byte-identical copied illustrations and their provenance records.
 site/assets/** -text
+site/assets/reference/*.json whitespace=cr-at-eol
