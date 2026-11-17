@@ -4,6 +4,8 @@ Existing project assets are copied byte-for-byte from `docs/project/` in researc
 
 The simulation teaser uses the frozen WC seed-42 actor, a 4 m route and a requested mean speed of 0.55 m/s. Its native standing/crouching requirements are 0.2932/0.1705 m; changes occur at 1.6 and 2.8 m. The 91-frame GIF is approximately 7.28 s, at 800 x 480 pixels. Playback follows simulation time, not measured wall-clock runtime. It is an illustrative episode, not one of the eight newly selected comparison conditions.
 
+The page now displays a new Isaac Lab rollout of that same archived route and actor, at the same requested speed and posture boundaries, captured with the dark gallery presentation. It is a new execution, not a replay of the old GIF; the original GIF remains untouched. The page video is trimmed after arrival (SHA256 `6e60d186a6e2f96d36a563546bdb29a76d598907c988726e3ba12ee66a487fa6`); the full recreated capture is also retained (SHA256 `dff27f9ddbfc4f1e6c6e91effeebe553265b270feea450d7833cbffca893e7fc`).
+
 Red indicates reference geometry and required height; orange indicates the upcoming preview; blue is measured base motion; yellow marks a preview target. Preserve these meanings in future captures.
 
 Figures originate from the project's historical report figure set. The detailed original illustration record is in `site/assets/reference/simulation_provenance.json`.

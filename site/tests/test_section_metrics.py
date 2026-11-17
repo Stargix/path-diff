@@ -45,9 +45,9 @@ class SectionMetricsTests(unittest.TestCase):
                 rows=[r for r in data['sections'] if r['actor']==m['actor'] and r['start']==start]
                 expected=[r for r in episodes if r['actor']==m['actor'] and r['suite']=='composition' and r['key'][5]==.35 and r['key'][2]==start and r['key'][3] in data['design']['base_families']]
                 self.assertEqual(len(rows),8)
-                # The older export's `arrived` is route_arrived, not the task's
-                # positional first-arrival predicate. Never conflate them.
-                self.assertEqual(sum(r['route_arrived'] for r in rows),sum(r['arrived'] for r in expected))
+                # Terminal arrival and progress arrival must remain distinct.
+                self.assertEqual(sum(r['route_arrived'] for r in rows),sum(r['route_arrived'] for r in expected))
+                self.assertEqual(sum(r['arrived'] for r in rows),sum(r['arrived'] for r in expected))
                 self.assertGreaterEqual(sum(r['arrived'] for r in rows),sum(r['success'] for r in expected))
                 for r in rows:
                     self.assertEqual(len(r['sections']),5)
