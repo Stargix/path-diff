@@ -1,0 +1,562 @@
+{
+  "h42/core/stage50": {
+    "n": 168,
+    "success": 166,
+    "adherence": 149,
+    "survived": 168,
+    "arrived": 167,
+    "initialization_failure": 0,
+    "total_cte_m": {
+      "n": 168,
+      "mean": 0.06311288714364525
+    },
+    "after_half_m_cte_m": {
+      "n": 168,
+      "mean": 0.04064356714176635
+    },
+    "full_active_height_mae_m": {
+      "n": 168,
+      "mean": 0.011815377494453319
+    },
+    "plateau_height_mae_m": {
+      "n": 168,
+      "mean": 0.009628367579786018
+    },
+    "arrival_speed_error_mps": {
+      "n": 167,
+      "mean": 0.01211347584486433
+    }
+  },
+  "h42/composition/stage50": {
+    "n": 84,
+    "success": 36,
+    "adherence": 35,
+    "survived": 84,
+    "arrived": 84,
+    "initialization_failure": 0,
+    "total_cte_m": {
+      "n": 84,
+      "mean": 0.07058829956111454
+    },
+    "after_half_m_cte_m": {
+      "n": 84,
+      "mean": 0.045824399140353
+    },
+    "full_active_height_mae_m": {
+      "n": 84,
+      "mean": 0.04592972843065148
+    },
+    "plateau_height_mae_m": {
+      "n": 84,
+      "mean": 0.03193307582045063
+    },
+    "arrival_speed_error_mps": {
+      "n": 84,
+      "mean": 0.014664785115763296
+    }
+  },
+  "h43/core/stage50": {
+    "n": 168,
+    "success": 166,
+    "adherence": 110,
+    "survived": 167,
+    "arrived": 168,
+    "initialization_failure": 0,
+    "total_cte_m": {
+      "n": 168,
+      "mean": 0.0849780336665433
+    },
+    "after_half_m_cte_m": {
+      "n": 168,
+      "mean": 0.03561220656792145
+    },
+    "full_active_height_mae_m": {
+      "n": 168,
+      "mean": 0.010928051385451994
+    },
+    "plateau_height_mae_m": {
+      "n": 168,
+      "mean": 0.008477364625183068
+    },
+    "arrival_speed_error_mps": {
+      "n": 168,
+      "mean": 0.012817734295821845
+    }
+  },
+  "h43/composition/stage50": {
+    "n": 84,
+    "success": 29,
+    "adherence": 19,
+    "survived": 84,
+    "arrived": 84,
+    "initialization_failure": 0,
+    "total_cte_m": {
+      "n": 84,
+      "mean": 0.08565456517750308
+    },
+    "after_half_m_cte_m": {
+      "n": 84,
+      "mean": 0.04159893900422113
+    },
+    "full_active_height_mae_m": {
+      "n": 84,
+      "mean": 0.04655064950652775
+    },
+    "plateau_height_mae_m": {
+      "n": 84,
+      "mean": 0.03263167786367592
+    },
+    "arrival_speed_error_mps": {
+      "n": 84,
+      "mean": 0.017687419946467116
+    }
+  },
+  "h44/core/stage50": {
+    "n": 168,
+    "success": 165,
+    "adherence": 158,
+    "survived": 168,
+    "arrived": 158,
+    "initialization_failure": 0,
+    "total_cte_m": {
+      "n": 168,
+      "mean": 0.056652028911880085
+    },
+    "after_half_m_cte_m": {
+      "n": 168,
+      "mean": 0.033975625410676
+    },
+    "full_active_height_mae_m": {
+      "n": 168,
+      "mean": 0.010101113327047122
+    },
+    "plateau_height_mae_m": {
+      "n": 168,
+      "mean": 0.008349303042493938
+    },
+    "arrival_speed_error_mps": {
+      "n": 158,
+      "mean": 0.011712985973002426
+    }
+  },
+  "h44/composition/stage50": {
+    "n": 84,
+    "success": 34,
+    "adherence": 34,
+    "survived": 84,
+    "arrived": 84,
+    "initialization_failure": 0,
+    "total_cte_m": {
+      "n": 84,
+      "mean": 0.061923422518053224
+    },
+    "after_half_m_cte_m": {
+      "n": 84,
+      "mean": 0.04039255903279852
+    },
+    "full_active_height_mae_m": {
+      "n": 84,
+      "mean": 0.04054507453526769
+    },
+    "plateau_height_mae_m": {
+      "n": 84,
+      "mean": 0.028582010784053376
+    },
+    "arrival_speed_error_mps": {
+      "n": 84,
+      "mean": 0.018841324315803126
+    }
+  },
+  "wc42/core/stage50": {
+    "n": 168,
+    "success": 145,
+    "adherence": 144,
+    "survived": 159,
+    "arrived": 130,
+    "initialization_failure": 0,
+    "total_cte_m": {
+      "n": 168,
+      "mean": 0.03302456459607042
+    },
+    "after_half_m_cte_m": {
+      "n": 168,
+      "mean": 0.033557129674591124
+    },
+    "full_active_height_mae_m": {
+      "n": 168,
+      "mean": 0.013722300997913061
+    },
+    "plateau_height_mae_m": {
+      "n": 168,
+      "mean": 0.012449841680271285
+    },
+    "arrival_speed_error_mps": {
+      "n": 130,
+      "mean": 0.031099681560832596
+    }
+  },
+  "wc42/composition/stage50": {
+    "n": 84,
+    "success": 40,
+    "adherence": 40,
+    "survived": 76,
+    "arrived": 64,
+    "initialization_failure": 0,
+    "total_cte_m": {
+      "n": 84,
+      "mean": 0.03905349774729638
+    },
+    "after_half_m_cte_m": {
+      "n": 83,
+      "mean": 0.03873657169246889
+    },
+    "full_active_height_mae_m": {
+      "n": 84,
+      "mean": 0.03705210327392533
+    },
+    "plateau_height_mae_m": {
+      "n": 84,
+      "mean": 0.02660779880049328
+    },
+    "arrival_speed_error_mps": {
+      "n": 64,
+      "mean": 0.02369042040062349
+    }
+  },
+  "gaussian_bc_42/core/stage50": {
+    "n": 168,
+    "success": 134,
+    "adherence": 132,
+    "survived": 162,
+    "arrived": 95,
+    "initialization_failure": 0,
+    "total_cte_m": {
+      "n": 168,
+      "mean": 0.06785294251693856
+    },
+    "after_half_m_cte_m": {
+      "n": 168,
+      "mean": 0.07032707521769528
+    },
+    "full_active_height_mae_m": {
+      "n": 168,
+      "mean": 0.01550126790035782
+    },
+    "plateau_height_mae_m": {
+      "n": 168,
+      "mean": 0.013319212300259443
+    },
+    "arrival_speed_error_mps": {
+      "n": 95,
+      "mean": 0.026555898618460454
+    }
+  },
+  "gaussian_bc_42/composition/stage50": {
+    "n": 84,
+    "success": 4,
+    "adherence": 4,
+    "survived": 81,
+    "arrived": 48,
+    "initialization_failure": 0,
+    "total_cte_m": {
+      "n": 84,
+      "mean": 0.07472572850418233
+    },
+    "after_half_m_cte_m": {
+      "n": 84,
+      "mean": 0.07743832096457481
+    },
+    "full_active_height_mae_m": {
+      "n": 84,
+      "mean": 0.051686547009185665
+    },
+    "plateau_height_mae_m": {
+      "n": 84,
+      "mean": 0.038933896027239304
+    },
+    "arrival_speed_error_mps": {
+      "n": 48,
+      "mean": 0.05105256084034413
+    }
+  },
+  "gaussian_random_42/core/stage50": {
+    "n": 168,
+    "success": 0,
+    "adherence": 0,
+    "survived": 168,
+    "arrived": 0,
+    "initialization_failure": 0,
+    "total_cte_m": {
+      "n": 168,
+      "mean": 0.5118055579562982
+    },
+    "after_half_m_cte_m": {
+      "n": 168,
+      "mean": 0.5932662011612029
+    },
+    "full_active_height_mae_m": {
+      "n": 168,
+      "mean": 0.06133676345814906
+    },
+    "plateau_height_mae_m": {
+      "n": 168,
+      "mean": 0.06133676345814906
+    },
+    "arrival_speed_error_mps": {
+      "n": 0,
+      "mean": null
+    }
+  },
+  "gaussian_random_42/composition/stage50": {
+    "n": 84,
+    "success": 0,
+    "adherence": 0,
+    "survived": 84,
+    "arrived": 0,
+    "initialization_failure": 0,
+    "total_cte_m": {
+      "n": 84,
+      "mean": 0.49217752509173895
+    },
+    "after_half_m_cte_m": {
+      "n": 84,
+      "mean": 0.5603804056133542
+    },
+    "full_active_height_mae_m": {
+      "n": 84,
+      "mean": 0.06127141136676073
+    },
+    "plateau_height_mae_m": {
+      "n": 84,
+      "mean": 0.06173829765369495
+    },
+    "arrival_speed_error_mps": {
+      "n": 0,
+      "mean": null
+    }
+  },
+  "gaussian_bc_43/core/stage50": {
+    "n": 168,
+    "success": 135,
+    "adherence": 130,
+    "survived": 161,
+    "arrived": 102,
+    "initialization_failure": 0,
+    "total_cte_m": {
+      "n": 168,
+      "mean": 0.058657075735806884
+    },
+    "after_half_m_cte_m": {
+      "n": 166,
+      "mean": 0.06118733580336424
+    },
+    "full_active_height_mae_m": {
+      "n": 168,
+      "mean": 0.01565556212638815
+    },
+    "plateau_height_mae_m": {
+      "n": 168,
+      "mean": 0.013444891687305201
+    },
+    "arrival_speed_error_mps": {
+      "n": 102,
+      "mean": 0.029677478473835048
+    }
+  },
+  "gaussian_bc_43/composition/stage50": {
+    "n": 84,
+    "success": 4,
+    "adherence": 4,
+    "survived": 81,
+    "arrived": 39,
+    "initialization_failure": 0,
+    "total_cte_m": {
+      "n": 84,
+      "mean": 0.05787896061138738
+    },
+    "after_half_m_cte_m": {
+      "n": 84,
+      "mean": 0.060402296882654936
+    },
+    "full_active_height_mae_m": {
+      "n": 84,
+      "mean": 0.05357884504787978
+    },
+    "plateau_height_mae_m": {
+      "n": 84,
+      "mean": 0.041304897805232374
+    },
+    "arrival_speed_error_mps": {
+      "n": 39,
+      "mean": 0.04615743394606856
+    }
+  },
+  "gaussian_random_43/core/stage50": {
+    "n": 168,
+    "success": 0,
+    "adherence": 0,
+    "survived": 168,
+    "arrived": 0,
+    "initialization_failure": 0,
+    "total_cte_m": {
+      "n": 168,
+      "mean": 0.2618130658354078
+    },
+    "after_half_m_cte_m": {
+      "n": 0,
+      "mean": null
+    },
+    "full_active_height_mae_m": {
+      "n": 168,
+      "mean": 0.06133457086980343
+    },
+    "plateau_height_mae_m": {
+      "n": 168,
+      "mean": 0.06133457086980343
+    },
+    "arrival_speed_error_mps": {
+      "n": 0,
+      "mean": null
+    }
+  },
+  "gaussian_random_43/composition/stage50": {
+    "n": 84,
+    "success": 0,
+    "adherence": 0,
+    "survived": 84,
+    "arrived": 0,
+    "initialization_failure": 0,
+    "total_cte_m": {
+      "n": 84,
+      "mean": 0.25824907918771106
+    },
+    "after_half_m_cte_m": {
+      "n": 0,
+      "mean": null
+    },
+    "full_active_height_mae_m": {
+      "n": 84,
+      "mean": 0.061358594335615635
+    },
+    "plateau_height_mae_m": {
+      "n": 84,
+      "mean": 0.061358594335615635
+    },
+    "arrival_speed_error_mps": {
+      "n": 0,
+      "mean": null
+    }
+  },
+  "gaussian_bc_44/core/stage50": {
+    "n": 168,
+    "success": 134,
+    "adherence": 130,
+    "survived": 161,
+    "arrived": 110,
+    "initialization_failure": 0,
+    "total_cte_m": {
+      "n": 168,
+      "mean": 0.06908488775869566
+    },
+    "after_half_m_cte_m": {
+      "n": 168,
+      "mean": 0.07143317626157243
+    },
+    "full_active_height_mae_m": {
+      "n": 168,
+      "mean": 0.015356647211038285
+    },
+    "plateau_height_mae_m": {
+      "n": 168,
+      "mean": 0.013177154652242149
+    },
+    "arrival_speed_error_mps": {
+      "n": 110,
+      "mean": 0.08784432419360302
+    }
+  },
+  "gaussian_bc_44/composition/stage50": {
+    "n": 84,
+    "success": 10,
+    "adherence": 10,
+    "survived": 79,
+    "arrived": 47,
+    "initialization_failure": 0,
+    "total_cte_m": {
+      "n": 84,
+      "mean": 0.07593102698835234
+    },
+    "after_half_m_cte_m": {
+      "n": 84,
+      "mean": 0.07829512614712474
+    },
+    "full_active_height_mae_m": {
+      "n": 84,
+      "mean": 0.05285490792067278
+    },
+    "plateau_height_mae_m": {
+      "n": 84,
+      "mean": 0.04029854531178162
+    },
+    "arrival_speed_error_mps": {
+      "n": 47,
+      "mean": 0.10379972420386264
+    }
+  },
+  "gaussian_random_44/core/stage50": {
+    "n": 168,
+    "success": 0,
+    "adherence": 0,
+    "survived": 168,
+    "arrived": 0,
+    "initialization_failure": 0,
+    "total_cte_m": {
+      "n": 168,
+      "mean": 0.24828208841028668
+    },
+    "after_half_m_cte_m": {
+      "n": 0,
+      "mean": null
+    },
+    "full_active_height_mae_m": {
+      "n": 168,
+      "mean": 0.061396611167029255
+    },
+    "plateau_height_mae_m": {
+      "n": 168,
+      "mean": 0.061396611167029255
+    },
+    "arrival_speed_error_mps": {
+      "n": 0,
+      "mean": null
+    }
+  },
+  "gaussian_random_44/composition/stage50": {
+    "n": 84,
+    "success": 0,
+    "adherence": 0,
+    "survived": 84,
+    "arrived": 0,
+    "initialization_failure": 0,
+    "total_cte_m": {
+      "n": 84,
+      "mean": 0.2520236818208581
+    },
+    "after_half_m_cte_m": {
+      "n": 0,
+      "mean": null
+    },
+    "full_active_height_mae_m": {
+      "n": 84,
+      "mean": 0.0612647002784624
+    },
+    "plateau_height_mae_m": {
+      "n": 84,
+      "mean": 0.0612647002784624
+    },
+    "arrival_speed_error_mps": {
+      "n": 0,
+      "mean": null
+    }
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "abstract": "Diffusion policies provide a promising framework for learning a unified locomotion controller from offline demonstrations of different behaviours. However, existing approaches are typically conditioned on target velocities or discrete skill commands, generally requiring an additional control layer to follow paths with posture and timing requirements. To address this limitation, we investigate a path-conditioned diffusion policy for the SOLO12 quadruped using route geometry, desired base height and target average speed as inputs, without specifying a local speed profile or skill identifier. To train it, we collect trajectories from existing walk and crouch reinforcement learning policies and apply hindsight relabeling using the recorded paths and achieved mean speeds as conditioning inputs, avoiding the need for path-following experts. The policy is first trained through offline imitation on these relabelled trajectories and then refined using Diffusion Policy Policy Optimization. Evaluations in Isaac Lab show that the offline policy responds to the task inputs, while online refinement improves tracking on unseen routes and helps meet route, posture and timing requirements together.",
+  "training": [
+    {
+      "method": "Deterministic imitation",
+      "constant": "0.0",
+      "transition": "0.0",
+      "cte": "5.4"
+    },
+    {
+      "method": "Diffusion imitation",
+      "constant": "2.8",
+      "transition": "0.6",
+      "cte": "3.5"
+    },
+    {
+      "method": "Diffusion + DPPO (ours)",
+      "constant": "100.0 ± 0.0",
+      "transition": "99.9 ± 0.1",
+      "cte": "2.1 ± 0.5"
+    }
+  ],
+  "timing": [
+    {
+      "input": "Remaining-time feedback",
+      "adherence": 91.0,
+      "speed_mae": 2.04
+    },
+    {
+      "input": "Fixed requested mean",
+      "adherence": 81.2,
+      "speed_mae": 3.63
+    },
+    {
+      "input": "Shuffled requested mean",
+      "adherence": 29.2,
+      "speed_mae": 17.87
+    }
+  ],
+  "validation": [
+    {
+      "speed": 0.25,
+      "id_adherence": 97.7,
+      "stress_adherence": 99.0,
+      "id_cte": 1.75
+    },
+    {
+      "speed": 0.5,
+      "id_adherence": 99.2,
+      "stress_adherence": 100.0,
+      "id_cte": 2.2
+    },
+    {
+      "speed": 0.85,
+      "id_adherence": 67.2,
+      "stress_adherence": 61.5,
+      "id_cte": 5.32
+    }
+  ],
+  "provenance": {
+    "tex_name": "i2r_report_final.tex",
+    "tex_sha256": "529104df1a12fa354bcbf004226055397d86c7994a0d2076b87c4a3325b19015",
+    "assets_sha256": {
+      "assets/figures/report/fig_posture_transitions.png": "3fa43f4b79e33d0ac2b876d7b7c39fdc0eea0e02c600dcede7e7facf47d4f0d9",
+      "assets/figures/report/speed_on_path.png": "e8295e64c7e2ba2107faecaecd6aca19fd5b4dd9f479c77cb898ca2a4242c4e1",
+      "assets/figures/report/geometry_pace_maps.png": "853b1d5fe11ea264f8d8390d120615bf7cd09c4b16046af64f229a0e3ddd0a81",
+      "assets/figures/report/geometry_stress_strip.png": "6f8e7fc3e70cdfbb71442205afdb9205b7ef43b44bd09636039ceca3fbbb1e4b",
+      "assets/figures/report/offline_coverage.png": "ea062afc8981be9c82364122a5af491b7a6208ef3f7e9e82e7e4b7871826bcb1",
+      "assets/figures/report/training_families.png": "2aba6ee97d10b6dc252b75b7b2bd9ae30f687999fd08e0cde91cc16296fe13d2"
+    }
+  }
+}

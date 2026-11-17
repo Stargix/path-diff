@@ -1,0 +1,58 @@
+[
+  {
+    "file": "assets/media/route_posture_demo.gif",
+    "source_relative_path": "docs/project/media/route_posture_demo.gif",
+    "sha256": "96f7aa3f72ff51d6830124cf10f52c7e238a81c66d42c81355229153c0a860b5",
+    "bytes": 6216507,
+    "category": "historical project illustration"
+  },
+  {
+    "file": "assets/media/standing.jpg",
+    "source_relative_path": "docs/project/media/standing.jpg",
+    "sha256": "ce078186966dbc3ffb6f380d6df2db1b2a43f99f388f9400365bab59fa332cfa",
+    "bytes": 77099,
+    "category": "historical project illustration"
+  },
+  {
+    "file": "assets/media/crouching.jpg",
+    "source_relative_path": "docs/project/media/crouching.jpg",
+    "sha256": "d30a07760f035e733bdb9dd66855ab592e0c4b46c049fa271df82605d06f5299",
+    "bytes": 76692,
+    "category": "historical project illustration"
+  },
+  {
+    "file": "assets/reference/simulation_provenance.json",
+    "source_relative_path": "docs/project/media/provenance.json",
+    "sha256": "b151c49d44f56b62a2fba47f169608e002a216811da3744cf1c86d7a7fd25fe2",
+    "bytes": 4041,
+    "category": "historical project illustration"
+  },
+  {
+    "file": "assets/figures/compact_overview.png",
+    "source_relative_path": "docs/project/figures/compact_overview.png",
+    "sha256": "e1aba235325aa5c9ec90fd807c1548021293097920de1e8a74e41a85d4980213",
+    "bytes": 37384,
+    "category": "historical project illustration"
+  },
+  {
+    "file": "assets/figures/compact_support_families.png",
+    "source_relative_path": "docs/project/figures/compact_support_families.png",
+    "sha256": "ef443cbd86d16a981d22a6089d650b6fca1eba1ba4a38ee5118d19dd1d194d03",
+    "bytes": 76559,
+    "category": "historical project illustration"
+  },
+  {
+    "file": "assets/figures/temporal_placement.png",
+    "source_relative_path": "docs/project/figures/temporal_placement.png",
+    "sha256": "612fdc97a78a2724001f3a7e620adc0d9292dc83af06c19fe9ddfbe6d2cdc47c",
+    "bytes": 173960,
+    "category": "historical project illustration"
+  },
+  {
+    "file": "assets/figures/fig_posture_transitions.png",
+    "source_relative_path": "docs/project/figures/fig_posture_transitions.png",
+    "sha256": "eef33431dde76a92d5b514b0da71a08a97aba73732900980ec7a074f76b2e4ef",
+    "bytes": 201097,
+    "category": "historical project illustration"
+  }
+]

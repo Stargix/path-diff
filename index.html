@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#111418"><meta name="description" content="Path Diff: reusing locomotion demonstrations for route, posture and timing control on SOLO12.">
+<title>Path Diff — Path-Conditioned Diffusion Policies for Quadruped Locomotion</title><link rel="stylesheet" href="styles.css?v=20261117-final25"><script src="app.js?v=20261117-final25" defer></script><script src="research.js?v=20261117-final25" defer></script>
+<script src="publication.js?v=20261117-final25" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header><nav class="container"><a class="brand" href="#top">Path Diff</a><div><a href="#abstract">Abstract</a><a href="#method">Method</a><a href="#matched-results">Results</a><a href="#timing">Timing</a><a href="#compare">Comparisons</a><a href="https://github.com/Stargix/path-diff">Code ↗</a></div></nav></header>
+<main id="main">
+<section class="intro container" id="top">
+<div class="intro-copy"><p class="project-name">Path Diff</p><h1>Path-Conditioned Diffusion Policies for Quadruped Locomotion</h1><p class="lead">Reusing walking and crouching demonstrations for route, posture and timing control on SOLO12.</p><div class="hero-links"><a class="text-link" href="#compare">Watch comparisons ↓</a><a class="text-link" href="https://github.com/Stargix/path-diff">Code ↗</a></div></div>
+<figure class="teaser"><div class="teaser-media"><video src="assets/media/teaser_recreated_short.mp4" autoplay muted loop playsinline aria-label="SOLO12 follows an S-shaped route and changes posture in simulation"></video></div><figcaption>One controller follows the route, changes height and adjusts its pace. Illustrative rollout at 0.55 m/s.</figcaption></figure>
+</section>
+
+<section class="container section prose" id="abstract"><h2>Abstract</h2><p id="report-abstract">We investigate how locomotion demonstrations collected for velocity control can support following a route with posture and timing requirements. We collect trajectories from existing walk and crouch experts and relabel two-second windows with the path followed and mean speed achieved, retaining the recorded height commands. A diffusion policy first learns from these examples and is then refined with Diffusion Policy Policy Optimization (DPPO). During execution, it receives local route and height targets and the average pace still needed to finish on time, without a skill command or a prescribed local speed profile. Experiments in Isaac Lab show that refinement improves task completion. Comparisons with frozen experts and Gaussian imitation plus PPO separate lateral tracking from posture composition: following the route closely does not necessarily mean reproducing each requested posture.</p></section>
+
+<section class="container section" id="method">
+<h2>Method</h2>
+<p class="section-copy">The task specifies a route, a height profile and a target average speed. The policy chooses the local motion; it is not given a gait identifier or a speed command for every section.</p>
+<figure class="method"><a href="assets/figures/method_grouped_25d_final.pdf"><img src="assets/figures/method_grouped_25d_final.png" loading="lazy" alt="Expert motion is hindsight relabelled for offline imitation, refined with DPPO, and executed with route, posture and timing inputs"></a></figure>
+<div class="method-explanation">
+<p><strong>1. Relabel existing motion.</strong> We collect trajectories from velocity-conditioned walk and crouch experts. Each two-second window is labelled with the XY path actually followed and the mean speed achieved. Recorded height commands provide the posture labels; the original observations and actions are retained. This turns a velocity-control demonstration into an example for the new task interface.</p>
+<p><strong>2. Learn action sequences offline.</strong> A transformer diffusion policy learns from these relabelled windows. Its inputs include robot history, four local waypoints with required heights, heading information and a speed scalar. Ten denoising steps predict eight future actions; four are executed at 50 Hz before the policy replans, giving a 12.5 Hz feedback loop.</p>
+<p><strong>3. Refine task completion online.</strong> DPPO starts from the imitation model and updates its denoising policy using progress, tracking, posture and timing rewards. Imitation teaches how the recorded motion relates to the new inputs; online interaction lets the policy learn to correct deviations from the requested task.</p>
+</div>
+<p class="method-note">The conditioning and relabeling pipeline reuses motion collected for velocity control under a route–posture–timing interface, without requiring path-following experts.</p>
+</section>
+
+<section class="container section" id="compare">
+<h2>Direct control versus frozen experts</h2>
+<p class="section-copy">Path Diff and Gaussian BC + PPO generate joint-action chunks at 12.5 Hz. The hierarchy selects a frozen expert and velocity command at 5 Hz. All three apply joint targets at 50 Hz; each set below uses the same route and request.</p>
+<div id="scenario-grid" class="scenario-grid" role="group" aria-label="Comparison task"></div>
+<div class="case-heading"><h3 id="case-title">S-curve</h3><p id="case-request"></p></div>
+<div class="video-grid-wrap"><div id="videos" class="videos"></div></div>
+<div class="playback-note"><button id="play" type="button" aria-pressed="false">Play together</button></div>
+<p id="case-explanation" class="case-explanation" aria-live="polite">Loading comparisons…</p>
+<p class="fine">Illustrative executions, not averages across training runs. The S-curve and corner test more demanding geometries. Click to pause; double-click to enlarge.</p>
+</section>
+
+<section class="container section" id="profile-results" hidden>
+<h2>Task performance by posture and speed</h2>
+<p class="section-copy">The same base-family routes and requests are used for each controller. We separate conservative requests from higher-speed stress, because the hierarchy can directly use the frozen crouch expert beyond the speed coverage in the recorded demonstrations.</p>
+<div id="profile-results-table" class="result-table broad-table"></div>
+<p class="table-note">Original task pass (%), averaged across evaluated actors; eight geometries per posture, speed and actor. The 0.25 m/s group is a conservative-request comparison, not proof of identical training support. Requested mean speed is not a bound on local speed. Higher-speed cases compare the available systems, not equal speed extrapolation. The original pass criterion averages height error and excludes regions around changes; it does not prove every posture was reached.</p>
+</section>
+
+<section class="container section" id="results" hidden>
+<h2>Full evaluation bank</h2>
+<p class="section-copy" id="bank-overview">Loading the complete evaluated bank…</p>
+<p class="table-note winner-key">Green marks the best observed mean in each column. This mixed-speed aggregate is not an equal-OOD comparison; survival and partial-trajectory errors do not measure task success.</p>
+<div id="full-results-table" class="result-table broad-table"></div>
+<p class="table-note">Each bank contains 14 geometries: two from each of four base and three stress families. Core: 168 attempts per actor at 0.25, 0.50 and 0.85 m/s, with constant postures and both single-change directions. Repeated: 84 attempts per actor at 0.35, 0.65 and 0.85 m/s, with both starting postures. <span id="bank-actor-counts"></span> Values are means across evaluated actors.</p>
+<p class="table-note">This broad suite includes unequal extrapolation demands, including fast crouch beyond its training-request range; it is not a shared OOD score or an architecture-only comparison. Survival covers 24 s and does not imply task completion. Active CTE and height MAE include available partial trajectories before failure. Random-init PPO uses demonstration-derived normalization; it is not learning without any demonstration information.</p>
+<h3 class="plot-heading">The aggregate hides a strong speed dependence</h3>
+<div id="speed-results-table" class="result-table broad-table"></div>
+<p class="table-note">Same complete bank, now separated by requested speed: 56 core and 28 repeated conditions per actor and speed. “Pass” retains the original route, pose, timing and average-height criterion; it does not require four successful posture changes. Geometry and posture remain pooled here, so this is a descriptive stress breakdown, not the primary matched-range benchmark.</p>
+</section>
+
+<section class="container section" id="matched-results">
+<h2>Route following and posture changes</h2>
+<p class="table-note"><a href="results.html">Complete results by speed and posture →</a></p>
+<p class="section-copy">We first compare constant postures and a single change at 0.25 m/s. These tasks separate basic tracking from the repeated changes below. Higher-speed results are shown separately, since the frozen experts and recorded demonstrations cover different speed ranges.</p>
+<div id="task-table" class="result-table"></div>
+<div id="baseline-table" hidden></div>
+<p class="table-note">Eight base-family development geometries and 16 attempts per actor in each block. Path Diff: one evaluated actor; hierarchy and Gaussian: three each. Values are actor means. Pass rates retain all attempts; errors use arrived attempts. Green marks the largest displayed pass-rate mean, including ties, not statistical significance.</p>
+<p class="reading" id="tracking-reading">Loading the tracking comparison…</p>
+<div hidden><div id="startup-table"></div></div>
+<p class="table-note">Active CTE includes recovery after policy-controlled settling. The hierarchy starts farther from the route under this protocol, so these values do not isolate steady-state tracking.</p>
+<h3 class="plot-heading">What changes at higher requested speeds?</h3>
+<p class="section-copy">At higher requested means, sustained crouching and changing posture become different demands. Separating them shows where performance decreases without hiding the result in an overall success rate.</p>
+<div id="speed-profile-table" class="result-table"></div>
+<p class="table-note">Original task pass on the same eight base-family geometries per cell and actor, including failures. Path Diff's online requests capped constant crouch at 0.4 m/s and constant walk at 1.0 m/s; the hierarchy can access broader expert capabilities. This measures the available systems, not equal speed extrapolation, so no winner is highlighted. <a href="results.html">All tested speeds and geometry families →</a></p>
+</section>
+
+<section class="container section" id="transition-comparison">
+<h2>Single changes and complete repeated profiles</h2>
+<p class="section-copy">A single change is aligned at its actual boundary. Repeated profiles keep the complete 4 m route and all four changes in order, so a missed first or second crouch remains visible instead of being averaged into one generic transition.</p>
+<div class="method-legend"><span class="ours">Path Diff (ours)</span><span class="hierarchy">Frozen-expert hierarchy</span><span class="gaussian">Gaussian BC + PPO</span><span class="requested">Requested height</span></div>
+<h3 class="plot-heading">Single posture changes · 0.25 m/s · base families</h3><div id="single-response" class="response-grid"></div>
+<p class="table-note">The window begins 0.6 m before the change. Curves are recomputed from recorded trajectories, not extended from the previous shorter window.</p>
+<h3 class="plot-heading">Repeated posture changes · 0.35 m/s · complete routes</h3>
+<div class="method-legend"><span class="ours">Path Diff (ours)</span><span class="hierarchy">Frozen-expert hierarchy</span><span class="gaussian">Gaussian BC + PPO</span><span class="requested">Requested height</span></div>
+<div id="repeated-response" class="sequence-grid"></div>
+<h3 class="plot-heading">Does the controller reproduce every section?</h3>
+<p class="section-copy">The original task score averages posture error and leaves a margin around each change. A run can therefore pass while missing an intermediate posture. We show that score beside a stricter section-wise check, rather than treating the two as the same measure of success.</p>
+<div id="composition-table" class="result-table"></div>
+<p class="table-note">Eight routes per starting posture and actor, at 0.35 m/s. Original pass uses the historical task criterion; all-section check requires spatial height MAE ≤4 cm in each of the five sections, including transition response. Both rates retain every planned attempt. Height MAE is the active time-average among arrived attempts. Green marks the largest displayed all-section mean.</p>
+<p class="reading" id="composition-reading">Loading the posture comparison…</p>
+<p class="table-note">The section-wise check is exploratory: it is not a validated measure of smoothness or instantaneous posture attainment. Its coverage rule excludes the first 4 cm and final 15 cm, tolerates one missing initial 1 cm grid cell, and never fills missing heights. <a href="results.html#definitions">Metric definitions and limitations →</a></p>
+<p class="table-note">Standing and crouched starts are shown separately. Each line averages the available route responses within each trained actor, then the available actors within a method. The requested curve averages the discretized reference profiles. Curves stop where observations end; failed or unobserved tails are not extrapolated. These are evaluation traces, not synchronized replays of the videos.</p>
+<p class="reading">These results distinguish following the path from reproducing the height sequence. They do not establish which controller makes the smoothest physical transition; that requires a separate comparison of motion during correctly completed changes.</p>
+<div hidden><h3 class="plot-heading">Height MAE in each requested section (cm)</h3>
+<div id="section-results-table" class="result-table broad-table"></div>
+<p class="table-note">Height MAE in cm, at 0.35 m/s on the same eight base-family routes per initial posture. Errors are measured at equally spaced first-passage locations in each actual section, including its transition response; no ±0.25 m region is removed. Arrived episodes only: their counts and the fraction of sampled section distance are shown explicitly. Missing tails are not imputed. Values are averaged within each actor, then across actors. A low conditional error is not an all-attempt success rate; the complete pass/failure results remain above.</p>
+<p class="reading">These section errors expose a missed intermediate posture without redefining success after seeing the results. They do not establish motion smoothness or prove that diffusion's multimodality caused a difference. A confirmatory four-change pass criterion still needs task-based tolerances and response intervals fixed before testing fresh routes.</p></div>
+</section>
+
+<section class="container section" id="learning-stages">
+<h2>What does refinement add to imitation?</h2>
+<p class="section-copy">Offline imitation produces locomotion and responds to the inputs, but rarely satisfies route, posture and timing requirements together. Refinement makes joint task completion much more reliable on the report's ordinary-route benchmark.</p>
+<div id="training-table" class="result-table"></div>
+<p class="table-note">Supporting experiment from the I2R benchmark, not the matched-range comparison above. Adherence requires task success and active cross-track RMSE ≤10 cm. Refined values are means across three online training runs; CTE is distance from the reference path.</p>
+</section>
+
+<section class="container section" id="timing">
+<h2>A completion time, not a local speed profile</h2>
+<p class="section-copy">The robot can slow down for a turn or a crouch section and recover time elsewhere. During execution, the speed input is the average pace still needed over the remaining route, so it changes as the robot gains or loses time.</p>
+<p class="budget-equation">bₜ = clip((L − sₜ) / max(T* − t, Δt), 0, 1.5)</p>
+<p class="table-note">L is route length, sₜ is progress, and T* = L / requested mean speed. The 1.5 m/s limit bounds the conditioning input, not the robot's actual speed.</p>
+<figure class="paper-figure wide"><img src="assets/figures/report/speed_on_path.png" loading="lazy" alt="Local speed and accumulated schedule margin for two posture-change directions at three requested mean speeds"><figcaption>Within-policy diagnostic, not a matched-range comparison between methods. Left: local speed. Centre: time ahead of or behind a uniform-pace reference. Higher requested means here illustrate timing response, not equivalent OOD difficulty.</figcaption></figure>
+<p class="reading">To test whether this feedback matters, we keep the trained controller fixed and change only its temporal input. A fixed mean still gives the correct target, but no longer reflects time gained or lost.</p>
+<div id="timing-table" class="result-table compact"></div>
+<p class="table-note">Within-policy ablation from the report: 24 paired routes and 144 attempts per setting. The same actor is used throughout; this is not an OOD comparison between methods. Speed MAE measures route-average speed at first arrival and excludes episodes that do not arrive.</p>
+</section>
+
+<section class="container section prose" id="evaluation-scope"><h2>Routes and evaluation scope</h2>
+<p>The comparison uses four base route families. Arcs, S-curves and corners provide separate geometry-stress tests. Speed and posture coverage differ between demonstrations and frozen experts, so geometry stress and higher-speed requests are reported separately.</p>
+<div class="route-overview"><div id="family-grid" class="family-grid"></div><p class="fine">Four base generators and three geometry-stress families. The stress families are excluded from the matched-range table and plots.</p></div></section>
+
+<section class="container section prose" id="scope"><h2>Limitations</h2>
+<p>All results shown here are from simulation. The comparative bank is development data, and the section-wise criterion is a retrospective diagnostic. The systems also differ in decision frequency and training recipe; their comparison does not isolate diffusion as the cause of a difference.</p>
+<p id="diffusion-seed-coverage"></p>
+<p>Low-speed tracking does not guarantee reliable performance on every speed and posture combination. Independent evaluation and physical-robot validation remain necessary before extending these conclusions to deployment.</p></section>
+<p id="research-error" class="container error" hidden>Some research results could not load. Please reload the local preview.</p>
+</main>
+<footer class="container"><span>Path Diff · SOLO12</span><a href="https://github.com/Stargix/path-diff">Project repository ↗</a></footer>
+<noscript><p class="container">Enable JavaScript to view the comparisons and result tables.</p></noscript>
+</body></html>
