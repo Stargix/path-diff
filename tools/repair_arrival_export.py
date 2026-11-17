@@ -2,9 +2,25 @@
 import argparse
 import hashlib
 import json
+import math
 from pathlib import Path
 import re
-import sys
+
+
+def arrival_fields(record):
+    """Export the evaluator's terminal event, not its progress diagnostic."""
+    arrived = bool(record['task_arrived'])
+    if record['task_success'] and not arrived:
+        raise ValueError('Task success without terminal arrival')
+    error = record['task_success_mean_speed_error_m_s'] if arrived else None
+    if arrived and (error is None or not math.isfinite(error)):
+        raise ValueError('Missing terminal-arrival speed error')
+    route_arrived = bool(record['route_arrived'])
+    route_speed = record['route_arrival_mean_speed_m_s'] if route_arrived else None
+    return dict(arrived=arrived, route_arrived=route_arrived,
+                arrival_speed_error_mps=abs(error) if error is not None else None,
+                route_arrival_speed_error_mps=abs(route_speed-record['requested_speed'])
+                    if route_speed is not None else None)
 
 
 def main():
@@ -12,8 +28,6 @@ def main():
     parser.add_argument('--research-root', type=Path, required=True)
     args = parser.parse_args()
     research = args.research_root.resolve()
-    sys.path.insert(0, str(research))
-    from scripts.research_comparison.arrival_fields import arrival_fields
     site = Path(__file__).resolve().parents[1]
     path = site/'data/episodes.json'
     before = path.read_bytes()
