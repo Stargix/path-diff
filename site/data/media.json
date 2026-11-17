@@ -1,1 +1,30 @@
-{"schema_version":1,"clips":[],"note":"No paired robot videos have been recorded. Traces and episode results are available separately. A ready clip requires capture_id, capture_metrics, source/route/checkpoint identities and a verified video path."}
+{
+  "schema_version": 1,
+  "clips": [
+    {"scenario_id":"moderate-route","actor_id":"h42","status":"pending"},
+    {"scenario_id":"moderate-route","actor_id":"wc42","status":"pending"},
+    {"scenario_id":"moderate-route","actor_id":"gaussian_bc_42","status":"pending"},
+    {"scenario_id":"walk-to-crouch","actor_id":"h42","status":"pending"},
+    {"scenario_id":"walk-to-crouch","actor_id":"wc42","status":"pending"},
+    {"scenario_id":"walk-to-crouch","actor_id":"gaussian_bc_42","status":"pending"},
+    {"scenario_id":"crouch-to-walk","actor_id":"h42","status":"pending"},
+    {"scenario_id":"crouch-to-walk","actor_id":"wc42","status":"pending"},
+    {"scenario_id":"crouch-to-walk","actor_id":"gaussian_bc_42","status":"pending"},
+    {"scenario_id":"corner-moderate","actor_id":"h42","status":"pending"},
+    {"scenario_id":"corner-moderate","actor_id":"wc42","status":"pending"},
+    {"scenario_id":"corner-moderate","actor_id":"gaussian_bc_42","status":"pending"},
+    {"scenario_id":"corner-fast","actor_id":"h42","status":"pending"},
+    {"scenario_id":"corner-fast","actor_id":"wc42","status":"pending"},
+    {"scenario_id":"corner-fast","actor_id":"gaussian_bc_42","status":"pending"},
+    {"scenario_id":"fast-crouch","actor_id":"h42","status":"pending"},
+    {"scenario_id":"fast-crouch","actor_id":"wc42","status":"pending"},
+    {"scenario_id":"fast-crouch","actor_id":"gaussian_bc_42","status":"pending"},
+    {"scenario_id":"repeated-standing","actor_id":"h42","status":"pending"},
+    {"scenario_id":"repeated-standing","actor_id":"wc42","status":"pending"},
+    {"scenario_id":"repeated-standing","actor_id":"gaussian_bc_42","status":"pending"},
+    {"scenario_id":"repeated-crouched","actor_id":"h42","status":"pending"},
+    {"scenario_id":"repeated-crouched","actor_id":"wc42","status":"pending"},
+    {"scenario_id":"repeated-crouched","actor_id":"gaussian_bc_42","status":"pending"}
+  ],
+  "note": "The hero GIF is one live WC-DPPO illustration, not a paired comparison. The 24 new RGB captures are pending; the comparison view therefore animates the recorded evaluation trajectories and reports their original metrics. A capture becomes ready only with verified video, per-capture metrics and provenance."
+}
