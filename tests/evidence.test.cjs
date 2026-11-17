@@ -1,0 +1,15 @@
+const test=require('node:test');
+const assert=require('node:assert/strict');
+const fs=require('node:fs');
+const path=require('node:path');
+const E=require('../evidence.js');
+const read=name=>JSON.parse(fs.readFileSync(path.join(__dirname,'../data',name+'.json'),'utf8'));
+const episodes=read('episodes'),actors=read('actors'),sections=read('publication-evidence'),presentation=read('presentation-evidence');
+test('all twelve actors have the same complete condition bank',()=>assert.deepEqual(E.validateBank(episodes,actors),{actors:12,episodes:3024}));
+test('three genuinely distinct trained actors per primary family',()=>{for(const family of E.families){const rows=actors.filter(a=>a.family===family);assert.equal(rows.length,3);assert.equal(new Set(rows.map(a=>a.checkpoint_sha256)).size,3);}});
+test('aggregate original passes reproduce independent reference values',()=>{for(const [suite,family,pass,gate,cte] of [['core','diffusion',89.6825396825,89.4841269841,3.1505444058],['core','hierarchy',98.6111111111,82.7380952381,6.8247649907],['composition','diffusion',52.380952381,52.380952381,3.4535019943],['composition','hierarchy',39.2857142857,34.9206349206,7.2722095752]]){const row=E.aggregate(episodes,actors,family,r=>r.suite===suite);assert.ok(Math.abs(row.pass-pass)<1e-8);assert.ok(Math.abs(row.gate-gate)<1e-8);assert.ok(Math.abs(row.cte-cte)<1e-8);}});
+test('terminal arrival remains distinct from route-progress arrival',()=>{assert.ok(episodes.some(r=>r.success&&r.arrived&&!r.route_arrived));for(const r of episodes){if(r.success)assert.equal(r.arrived,true);assert.equal(r.arrival_speed_error_mps!==null,r.arrived);}});
+test('invalid labels and unmatched task identities are rejected',()=>{const copy=episodes.map(r=>({...r,key:[...r.key]}));copy[0].arrived=false;assert.throws(()=>E.validateBank(copy,actors),/arrival/);copy[0].arrived=true;copy[0].key[3]='nonexistent';assert.throws(()=>E.validateBank(copy,actors),/identities/);});
+test('section rates include three actors, including the weaker diffusion run',()=>{const standing=E.sectionSummary(sections,'diffusion','repeated-standing'),crouch=E.sectionSummary(sections,'diffusion','repeated-crouched');assert.equal(standing.actors,3);assert.equal(standing.attempts,8);assert.ok(Math.abs(standing.sections-41.6666666667)<1e-8);assert.ok(Math.abs(crouch.sections-16.6666666667)<1e-8);});
+test('all plotted actor traces use the complete imported run set',()=>{for(const start of [0,1])for(const family of E.families){const ids=new Set(actors.filter(a=>a.family===family).map(a=>a.id));const groups=presentation.repeated.groups.filter(g=>g.start===start&&ids.has(g.actor));assert.equal(groups.length,3);assert.equal(E.series(groups,presentation.repeated.grid_m.length).length,presentation.repeated.grid_m.length);}});
+test('series retain missing samples, never invent zeros or tails',()=>assert.deepEqual(E.series([{mean_height_m:[.2,null]},{mean_height_m:[.3,null]}],2),[{mean:.25,low:.2,high:.3,actors:2},{mean:null,low:null,high:null,actors:0}]));

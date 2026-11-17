@@ -22,8 +22,8 @@ class Page(HTMLParser):
 class PresentationTests(unittest.TestCase):
     def test_page_is_not_the_diagnostic_dashboard(self):
         page=Page();page.feed((SITE/'index.html').read_text(encoding='utf-8'))
-        self.assertEqual([src.split('?')[0] for src in page.scripts],['app.js','research.js','publication.js'])
-        self.assertTrue({'report-abstract','method','training-table','timing-table','full-results-table','baseline-table','single-response','repeated-response'}<=page.ids)
+        self.assertEqual([src.split('?')[0] for src in page.scripts],['evidence.js','app.js','research.js'])
+        self.assertTrue({'abstract','method','training-table','timing-table','system-results','single-response','repeated-response'}<=page.ids)
         self.assertNotIn('validation-table',page.ids)
         self.assertNotIn('posture-reference',page.ids)
         self.assertNotIn('select',page.tags)
@@ -33,8 +33,9 @@ class PresentationTests(unittest.TestCase):
         html=(SITE/'index.html').read_text(encoding='utf-8')
         self.assertLess(html.index('id="method"'),html.index('id="compare"'))
         self.assertLess(html.index('id="compare"'),html.index('id="results"'))
-        self.assertLess(html.index('id="results"'),html.index('id="matched-results"'))
-        self.assertIn('<h1>Path-Conditioned Diffusion Policies for Quadruped Locomotion</h1>',html)
+        self.assertLess(html.index('id="results"'),html.index('id="transitions"'))
+        heading=re.search(r'<h1>(.*?)</h1>',html,re.S).group(1)
+        self.assertEqual(' '.join(re.sub(r'<[^>]+>',' ',heading).split()),'Path-Conditioned Diffusion Policies for Quadruped Locomotion')
         self.assertIn('src="assets/media/teaser_recreated_short.mp4" autoplay muted loop playsinline',html)
         self.assertTrue((SITE/'assets/media/teaser_recreated_short.mp4').is_file())
         self.assertNotIn(' download',html)
@@ -53,7 +54,7 @@ class PresentationTests(unittest.TestCase):
         self.assertIn('height:auto',rule)
         self.assertIn('aspect-ratio:16/9',rule)
         self.assertIn('.video-grid-wrap{overflow-x:auto',css)
-        self.assertIn('tbody tr:not(.table-group) th[scope=row]{position:sticky;left:0',css)
+        self.assertIn('tbody th[scope=row]{position:sticky;left:0',css)
 
 
 if __name__=='__main__':

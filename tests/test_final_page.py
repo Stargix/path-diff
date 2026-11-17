@@ -31,12 +31,12 @@ class FinalPageTests(unittest.TestCase):
                     self.assertIn(u.fragment,dest.ids,ref)
 
     def test_composition_keeps_both_definitions(self):
-        script=(ROOT/'publication.js').read_text(encoding='utf-8')
-        self.assertIn('Original task pass (%)',script)
-        self.assertIn('All-section check (%)',script)
+        script=(ROOT/'research.js').read_text(encoding='utf-8')
+        self.assertIn('Original task<br>pass (%)',script)
+        self.assertIn('All-section<br>diagnostic (%)',script)
         self.assertNotIn("['Controller','All sections (%)','Joint task (%)'",script)
         self.assertNotIn("'Command variation','Tilt (°)'",script)
-        self.assertIn('tracking-reading',script)
+        self.assertIn('system-reading',script)
         self.assertIn('composition-reading',script)
 
 

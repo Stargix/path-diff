@@ -2,12 +2,17 @@
 
 ## Existing evidence
 
-The 2,520 development attempts remain unchanged. The website computes means
-per trained actor, then equal-weight method means and sample SD. There is one
-evaluated diffusion actor in this newer bank and three actors in each baseline
-family. WC43 and WC44 exist in the historical archive but were omitted from
-this bank; this is an incomplete evaluation, not a lack of training seeds. No error bar is
-invented for diffusion; route repetitions are not training replicates.
+The completed bank contains 3,024 attempts and twelve actors, including all
+three diffusion online runs. The landing page compares the three primary
+families (nine actors, 2,268 episodes); random-init PPO remains in the details.
+Means are computed per actor, then equally over actors, without ± notation on
+the website. Route repetitions are not training replicates. The diffusion
+runs share an offline prior.
+
+An export correction on 2026-11-18 separates terminal-task arrival from the
+route-progress diagnostic: 357 arrival flags and associated conditional speed
+errors changed from the original raw records, while task-pass labels and
+tracking measurements remained unchanged. Provenance records the correction.
 
 The full bank is a deployed-system comparison. Speed, posture and geometry
 coverage differ between recorded demonstrations and accessible frozen experts.
