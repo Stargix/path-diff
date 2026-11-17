@@ -71,13 +71,20 @@ def save(fig, name, output):
     plt.close(fig)
 
 
-def build(root, report, output, data_path):
+def build(root, report, output, data_path, theme='dark'):
     output.mkdir(parents=True, exist_ok=True)
+    light = theme == 'light'
+    foreground, grid = ('#53616b', '#d6dfe0') if light else ('#b6c0c8', '#2c353d')
+    neutral = '#697b85' if light else '#b7c0c6'
+    marker = '#52636e' if light else '#cad1d5'
+    speed_colors = {0.35: '#2e628e', 0.65: '#216b48', 0.85: '#9c5e2b'} if light else COLORS
+    relative_cmap = LinearSegmentedColormap.from_list('relative_light', ['#367aa5', '#6f818a', '#b7702c']) if light else RELATIVE
     plt.rcParams.update({'font.family': 'sans-serif', 'font.sans-serif': ['DejaVu Sans'],
-                         'font.size': 11, 'text.color': '#b6c0c8', 'axes.labelcolor': '#b6c0c8',
-                         'xtick.color': '#a6afb7', 'ytick.color': '#a6afb7',
-                         'axes.edgecolor': '#4b5964', 'axes.spines.top': False,
-                         'axes.spines.right': False, 'grid.color': '#2c353d',
+                         'font.size': 11, 'text.color': foreground, 'axes.labelcolor': foreground,
+                         'xtick.color': foreground if light else '#a6afb7',
+                         'ytick.color': foreground if light else '#a6afb7',
+                         'axes.edgecolor': neutral if light else '#4b5964', 'axes.spines.top': False,
+                         'axes.spines.right': False, 'grid.color': grid,
                          'svg.fonttype': 'none', 'svg.hashsalt': 'path-diff-report-timing'})
     temporal_path = report / 'temporal_figure_provenance.json'
     geometry_path = report / 'compact_layout_provenance.json'
@@ -110,15 +117,15 @@ def build(root, report, output, data_path):
         for quantity in ['speed', 'margin']:
             fig, ax = plt.subplots(figsize=(5.25, 2.6), layout='constrained')
             ax.set_facecolor('none'); ax.grid(alpha=.8, linewidth=.7)
-            ax.axvline(2, color='#b7c0c6', linestyle=':', linewidth=1)
+            ax.axvline(2, color=neutral, linestyle=':', linewidth=1)
             for curve in [c for c in curves if c['direction'] == direction]:
                 speed = curve['requested_speed']
                 ax.plot(curve['distance_m'], curve[quantity + ('_m_s' if quantity == 'speed' else '_s')],
-                        color=COLORS[speed], linewidth=1.7)
+                        color=speed_colors[speed], linewidth=1.7)
                 if quantity == 'speed':
-                    ax.axhline(speed, color=COLORS[speed], linestyle='--', alpha=.55, linewidth=.8)
+                    ax.axhline(speed, color=speed_colors[speed], linestyle='--', alpha=.55, linewidth=.8)
             if quantity == 'margin':
-                ax.axhline(0, color='#b7c0c6', linewidth=.8)
+                ax.axhline(0, color=neutral, linewidth=.8)
             ax.set(xlim=(0, 4), xticks=[0, 1, 2, 3, 4],
                    ylim=(0, 1.7) if quantity == 'speed' else margin_limits,
                    xlabel='Distance along route (m)',
@@ -148,12 +155,12 @@ def build(root, report, output, data_path):
                      'relative_speed': relative.tolist()})
         fig, ax = plt.subplots(figsize=(3.25, 2.9), layout='constrained')
         ax.set_facecolor('none')
-        ax.plot(*reference.T, '--', color='#a8b0b6', linewidth=1, zorder=1)
+        ax.plot(*reference.T, '--', color=('#65727b' if light else '#a8b0b6'), linewidth=1, zorder=1)
         segments = np.stack((measured[:-1], measured[1:]), axis=1)
-        collection = LineCollection(segments, cmap=RELATIVE, norm=Normalize(-1, 1), linewidth=2.6)
+        collection = LineCollection(segments, cmap=relative_cmap, norm=Normalize(-1, 1), linewidth=2.6)
         collection.set_array(np.clip(relative[:-1], -1, 1)); ax.add_collection(collection)
-        ax.plot(*reference[0], 'o', markersize=4, markerfacecolor='#101418', markeredgecolor='#cad1d5')
-        ax.plot(*reference[-1], 'x', markersize=5, color='#cad1d5')
+        ax.plot(*reference[0], 'o', markersize=4, markerfacecolor=('#f8faf9' if light else '#101418'), markeredgecolor=marker)
+        ax.plot(*reference[-1], 'x', markersize=5, color=marker)
         ax.autoscale(); ax.margins(.12); ax.set_aspect('equal', adjustable='datalim')
         ax.set(xlabel='Local x (m)', ylabel='Local y (m)')
         ax.grid(alpha=.65, linewidth=.6)
@@ -177,7 +184,9 @@ def build(root, report, output, data_path):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--source-root', type=Path, required=True)
+    parser.add_argument('--theme', choices=['dark', 'light'], default='dark')
     args = parser.parse_args()
     root = args.source_root.resolve()
     build(root, root / 'scratch/i2r/path_conditioned_locomotion',
-          SITE / 'assets/figures/timing', SITE / 'data/timing-examples.json')
+          SITE / 'assets/figures/timing' / ('light' if args.theme == 'light' else ''),
+          SITE / 'data/timing-examples.json', args.theme)

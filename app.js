@@ -82,7 +82,7 @@ async function start() {
   const scale=Math.min(150/Math.max(.01,Math.max(...xs)-lx),65/Math.max(.01,Math.max(...ys)-ly));
   const left=f.id==='ood_arc'?(180-(Math.max(...xs)-lx)*scale)/2:15;
   const line=f.path_xy.map((p,i)=>(i?'L':'M')+(left+(p[0]-lx)*scale)+','+(85-(p[1]-ly)*scale)).join(' ');
-  return '<div class="family-item"><svg width="140" height="78" viewBox="0 0 180 100" aria-hidden="true"><path d="'+line+'" fill="none" stroke="'+(f.ood?'#d6a980':'#8ec9ac')+'" stroke-width="3"/></svg><span>'+familyNames[f.id]+'</span></div>';
+  return '<div class="family-item"><svg width="140" height="78" viewBox="0 0 180 100" aria-hidden="true"><path d="'+line+'" fill="none" stroke="'+(f.ood?'var(--sand)':'var(--accent)')+'" stroke-width="3"/></svg><span>'+familyNames[f.id]+'</span></div>';
  }).join('');
 }
 start().catch(e=>{$('#case-explanation').textContent='The comparisons could not load. Open this page through the local HTTP preview and reload.';console.error(e);});

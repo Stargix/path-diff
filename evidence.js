@@ -45,5 +45,6 @@
     return Array.from({length},(_,i)=>{const values=groups.map(group=>group.mean_height_m[i]).filter(Number.isFinite);return {mean:mean(values),low:values.length?Math.min(...values):null,high:values.length?Math.max(...values):null,actors:values.length};});
   }
   const isBest=(value,values)=>Number.isFinite(value)&&Math.abs(value-Math.max(...values.filter(Number.isFinite)))<1e-9;
-  return {families,names,mean,format,validateBank,aggregate,sectionSummary,series,isBest};
+  const isLowest=(value,values)=>Number.isFinite(value)&&Math.abs(value-Math.min(...values.filter(Number.isFinite)))<1e-9;
+  return {families,names,mean,format,validateBank,aggregate,sectionSummary,series,isBest,isLowest};
 });

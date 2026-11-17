@@ -46,6 +46,15 @@ class TimingFigureTests(unittest.TestCase):
                     continue
                 self.assertNotIn(chr(0x2014), path.read_text(encoding='utf-8'), str(path))
 
+    def test_light_theme_changes_colours_not_geometry(self):
+        for dark in (SITE / 'assets/figures/timing').glob('*.svg'):
+            light = dark.parent / 'light' / dark.name
+            self.assertTrue(light.is_file())
+            dark_root, light_root = ET.parse(dark).getroot(), ET.parse(light).getroot()
+            self.assertEqual(dark_root.attrib['viewBox'], light_root.attrib['viewBox'])
+            paths = lambda root: [p.attrib.get('d') for p in root.iter('{http://www.w3.org/2000/svg}path')]
+            self.assertEqual(paths(dark_root), paths(light_root))
+
 
 if __name__ == '__main__':
     unittest.main()
