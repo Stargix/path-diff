@@ -8,7 +8,7 @@
   const families = ['diffusion', 'hierarchy', 'gaussian_bc'];
   const names = {diffusion:'Path Diff (ours)', hierarchy:'Frozen-expert hierarchy', gaussian_bc:'Gaussian BC + PPO', gaussian_random:'Random-init PPO'};
   const mean = values => { const valid = values.filter(Number.isFinite); return valid.length ? valid.reduce((sum, value) => sum + value, 0) / valid.length : null; };
-  const format = (value, digits=1) => Number.isFinite(value) ? value.toFixed(digits) : '—';
+  const format = (value, digits=1) => Number.isFinite(value) ? value.toFixed(digits) : 'N/A';
   function validateBank(episodes, actors) {
     const ids = new Set(actors.map(actor => actor.id)), seen = new Set();
     if (ids.size !== actors.length) throw Error('Duplicate actors');

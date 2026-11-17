@@ -25,7 +25,7 @@
   const label = id => names[id] || `${family(id)==='gaussian_bc'?'Gaussian BC + PPO':'Random-weight PPO'} · ${id.slice(-2)}`;
   const dash = id => id.endsWith('43') ? '7 3' : id.endsWith('44') ? '2 3' : '';
   const select = name => document.querySelector(`#audit-${name}`);
-  const fmt = v => Number.isFinite(v) ? (v*100).toFixed(2) : '—';
+  const fmt = v => Number.isFinite(v) ? (v*100).toFixed(2) : 'N/A';
   function speeds() {
     const values = select('suite').value==='core' ? [.25,.5,.85] : [.35,.65,.85];
     select('speed').innerHTML=values.map(v=>`<option value="${v}">${v.toFixed(2)} m/s</option>`).join('');
