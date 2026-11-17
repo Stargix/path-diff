@@ -10,4 +10,14 @@ Red indicates reference geometry and required height; orange indicates the upcom
 
 Figures originate from the project's historical report figure set. The detailed original illustration record is in `site/assets/reference/simulation_provenance.json`.
 
+The timing section redraws the selected executions from I2R figures 7 and 8 as responsive SVG plots, not screenshots. The archived PNGs remain unchanged. `site/data/timing-examples.json` records the selected scenarios, source and selection-manifest hashes, active sample arrays and plotting conventions. These are individual WC seed-42 report executions, not comparative-bank averages. No new rollouts or outcome-based reselection are performed.
+
+Rebuild with NumPy and Matplotlib from the original research checkout (which contains the archived rollout files):
+
+```powershell
+python site/tools/build_timing_figures.py --source-root <original-research-checkout>
+```
+
+The export preserves the original nearest-segment projection, post-step active interval through first arrival, five-sample edge-padded speed smoothing and archived active origins for schedule margin. It does not change experimental metrics. Relative-speed colours saturate at 100% below/above the requested mean. The web figure separates the geometry maps from the speed/margin curves; the duplicate 0.85 m/s route maps in report figure 8 are omitted.
+
 Pretrained walking and crouching policies are existing research inputs, not newly trained experts contributed by this release. Preserve upstream software, robot-asset and model attributions during any code extraction. Do not copy reference-site text, imagery or code without checking its license. No site-wide source/media license is selected by this initial scaffold; decide redistribution terms with the project maintainers before a public release.

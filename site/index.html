@@ -2,10 +2,10 @@
 <html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#101418"><meta name="description" content="Path Diff investigates path, posture and timing control with diffusion policies learned from velocity-conditioned locomotion experts.">
-<meta property="og:title" content="Path Diff — Path-Conditioned Diffusion Policies for Quadruped Locomotion">
+<meta property="og:title" content="Path Diff: Path-Conditioned Diffusion Policies for Quadruped Locomotion">
 <meta property="og:description" content="From velocity-conditioned demonstrations to route, posture and timing control. Method, simulation comparisons and experimental results on SOLO12.">
-<title>Path Diff — Path-Conditioned Diffusion Policies for Quadruped Locomotion</title>
-<link rel="stylesheet" href="styles.css?v=20261118-research"><script src="evidence.js?v=20261118-research" defer></script><script src="app.js?v=20261118-research" defer></script><script src="research.js?v=20261118-research" defer></script>
+<title>Path Diff: Path-Conditioned Diffusion Policies for Quadruped Locomotion</title>
+<link rel="stylesheet" href="styles.css?v=20261118-timing"><script src="evidence.js?v=20261118-timing" defer></script><script src="app.js?v=20261118-research" defer></script><script src="research.js?v=20261118-research" defer></script>
 </head><body>
 <a class="skip" href="#main">Skip to content</a>
 <header><nav class="container" aria-label="Main navigation"><a class="brand" href="#top">Path Diff<span>.</span></a><div><a href="#method">Method</a><a href="#compare">Videos</a><a href="#results">Results</a><a href="results.html">Evaluation details ↗</a></div></nav></header>
@@ -19,16 +19,16 @@
 </section>
 <section class="container section prose" id="abstract">
 <p class="section-kicker">Overview</p><h2>Abstract</h2>
-<p>Diffusion policies can learn several locomotion behaviours from demonstrations. We investigate what happens when the task is specified differently: follow a path, change posture at particular locations and finish at a requested average speed. The controller must decide how to use the demonstrated motion to satisfy these requirements together, without a skill identifier or a prescribed local speed profile.</p>
-<p>Path Diff learns from trajectories collected with velocity-conditioned walking and crouching experts. We relabel the recorded motion for the new task interface, train a diffusion policy by imitation and refine it with Diffusion Policy Policy Optimization (DPPO). We study what transfers through imitation, what refinement changes, and the trade-offs against frozen-expert control and Gaussian imitation with PPO.</p>
+<p>Diffusion policies provide a framework for learning locomotion behaviours from offline demonstrations. Existing approaches typically use target velocities or skill commands, while following a route with posture and timing requirements calls for a different task interface. We investigate a path-conditioned diffusion policy for the SOLO12 quadruped, using route geometry, desired base height and target average speed as inputs, without specifying a local speed profile or skill identifier.</p>
+<p>We collect trajectories from velocity-conditioned walking and crouching experts and relabel them with the paths followed and mean speeds achieved. The policy is trained through offline imitation and refined using Diffusion Policy Policy Optimization (DPPO). Experiments in Isaac Lab show that imitation produces a response to the task inputs and refinement improves tracking and joint task completion. Comparisons with a frozen-expert hierarchy and Gaussian imitation with PPO examine the trade-offs in tracking, posture changes and task coverage.</p>
 </section>
 <section class="container section" id="method">
 <p class="section-kicker">Method</p><h2>From velocity demonstrations to path-conditioned control</h2>
-<p class="section-copy">A path and its height requirements describe where to go and how to move.<br class="desktop-break"> A target average speed sets the time budget, not the speed of every step.</p>
+<p class="section-copy">The route specifies a spatial path and desired base height along it.<br class="desktop-break"> The requested average speed sets a completion time, not a local speed profile.</p>
 <figure class="method"><a href="assets/figures/method_grouped_25d_final.pdf" aria-label="Open method diagram as PDF"><img src="assets/figures/method_grouped_25d_final.png" loading="lazy" alt="Velocity-conditioned expert motion is relabelled for imitation and refined with DPPO. Local path and height targets, timing feedback and robot history condition execution."></a></figure>
 <div class="method-explanation">
 <div><span class="step">01</span><h3>Relabel recorded motion</h3><p>Two-second windows are labelled with the XY path followed and mean speed achieved. We retain the recorded height commands, observations and actions. No path-following expert is required.</p></div>
-<div><span class="step">02</span><h3>Learn, then refine</h3><p>Offline imitation learns the relationship between these inputs and motion. DPPO then adapts the policy through interaction, with rewards for route tracking, posture and timing.</p></div>
+<div><span class="step">02</span><h3>Imitation and refinement</h3><p>Offline imitation trains the policy to predict recorded actions from the relabelled inputs. DPPO then refines it in simulation, with rewards for route tracking, posture and timing.</p></div>
 <div><span class="step">03</span><h3>Act and replan</h3><p>Robot history, local path and height targets, and timing feedback condition eight predicted actions. Four are executed at 50 Hz before replanning at 12.5 Hz.</p></div>
 </div></section>
 <section class="container section" id="compare">
@@ -49,7 +49,7 @@
 </section>
 <section class="container section" id="results">
 <p class="section-kicker">Comparative results</p><h2>Tracking, completion and posture composition</h2>
-<p class="section-copy">We first inspect conservative requests on the four base route families.<br class="desktop-break"> The broader bank, including higher speeds and geometry stress, is reported separately.</p>
+<p class="section-copy">The main table uses moderate-speed requests on the four base route families.<br class="desktop-break"> Higher-speed requests and geometry-stress tests are reported separately.</p>
 <p id="bank-overview" class="data-scope">Loading evaluation bank…</p><div id="system-results" class="result-table"></div>
 <p class="table-note">Mean across three online runs per controller; all attempts in each displayed block are retained. Core and repeated blocks use different requested speeds and should not be subtracted to estimate a composition effect. Original task pass checks arrival, terminal pose, mean speed and average height; tracking-gated pass adds active CTE RMSE ≤10 cm. Active errors include available partial trajectories. Green marks the largest pass-rate mean where the methods differ, not statistical significance.</p>
 <p id="system-reading" class="reading"></p>
@@ -57,7 +57,7 @@
 </section>
 <section class="container section" id="transitions">
 <p class="section-kicker">Spatial posture control</p><h2>Posture changes along the route</h2>
-<p class="section-copy">We inspect the response around one change and across a repeated profile. The full route matters: reaching the end does not establish that every intermediate posture was reproduced.</p>
+<p class="section-copy">Height traces show the response to a single change and to four successive changes.<br class="desktop-break"> We evaluate the intermediate sections as well as arrival at the goal.</p>
 <div class="method-legend"><span class="ours">Path Diff (ours)</span><span class="hierarchy">Frozen-expert hierarchy</span><span class="gaussian">Gaussian BC + PPO</span><span class="requested">Requested height</span></div>
 <div class="figure-heading"><h3>One change</h3><p>0.25 m/s · four base families</p></div><div id="single-response" class="response-grid"></div>
 <div class="figure-heading"><h3>Four successive changes</h3><p>0.35 m/s · complete 4 m routes</p></div><div id="repeated-response" class="sequence-grid"></div>
@@ -71,7 +71,24 @@
 <p class="section-copy">The robot may slow down during a turn or crouch section and recover time elsewhere. The speed input reflects the average pace still needed over the remaining route.</p>
 <p class="budget-equation" aria-label="Remaining pace is remaining distance divided by remaining time, clipped between zero and 1.5 metres per second">b<sub>t</sub> = clip<span class="equation-bracket">(</span><span class="fraction"><span>L − s<sub>t</sub></span><span>max(T* − t, Δt)</span></span>, 0, 1.5<span class="equation-bracket">)</span></p>
 <p class="table-note equation-note">T* = route length / requested mean speed. The 1.5 m/s limit bounds the conditioning input, not actual robot speed.</p>
-<figure class="paper-figure"><img src="assets/figures/report/speed_on_path.png" loading="lazy" alt="Local speed and schedule margin along walking-to-crouching and crouching-to-walking routes at three requested mean speeds"><figcaption>Local speed and time gained or lost along the route. Within-policy diagnostic from the report, not a cross-controller comparison.</figcaption></figure>
+<figure class="native-figure">
+<div class="figure-heading"><h3>Local pace on different geometries</h3><p>Walking · requested mean 0.65 m/s</p></div>
+<div class="pace-maps">
+<div><h4>Coherent smooth</h4><img src="assets/figures/timing/coherent_smooth_pace.svg" loading="lazy" alt="Local speed along a smooth route, coloured relative to the requested mean"><p>Mean 0.66 m/s · CTE 3.1 cm</p></div>
+<div><h4>Rounded waypoint</h4><img src="assets/figures/timing/rounded_waypoint_pace.svg" loading="lazy" alt="Local speed along a rounded waypoint route"><p>Mean 0.65 m/s · CTE 3.3 cm</p></div>
+<div><h4>S-curve</h4><img src="assets/figures/timing/ood_s_curve_pace.svg" loading="lazy" alt="Local speed along an S-curve"><p>Mean 0.64 m/s · CTE 4.5 cm</p></div>
+<div><h4>Corner</h4><img src="assets/figures/timing/sweep_hard_turn_pace.svg" loading="lazy" alt="Local speed around a sharp corner"><p>Mean 0.65 m/s · CTE 5.2 cm</p></div>
+</div>
+<div class="relative-legend"><span>Slower</span><span class="relative-scale" aria-hidden="true"></span><span>Faster</span><small>−100% · requested mean · +100%</small></div>
+<figcaption>The four executions from Fig. 7 of the I2R report. Colour shows route-tangent speed relative to the requested mean, clipped at ±100%; dashed curves are reference paths. Local speed varies with geometry even when the achieved route mean is close to the request.</figcaption>
+</figure>
+<figure class="native-figure">
+<div class="figure-heading"><h3>Speed and timing through a posture change</h3><p>Same route · height changes at 2 m</p></div>
+<div class="speed-legend"><span class="slow">0.35 m/s</span><span class="medium">0.65 m/s</span><span class="fast">0.85 m/s</span></div>
+<h4 class="timing-direction">Walk to crouch</h4><div class="timing-curves"><img src="assets/figures/timing/walk_to_crouch_speed.svg" loading="lazy" alt="Walk to crouch: local speed versus distance for three requested mean speeds"><img src="assets/figures/timing/walk_to_crouch_margin.svg" loading="lazy" alt="Walk to crouch: schedule margin versus distance; positive is ahead of the constant-pace reference"></div>
+<h4 class="timing-direction">Crouch to walk</h4><div class="timing-curves"><img src="assets/figures/timing/crouch_to_walk_speed.svg" loading="lazy" alt="Crouch to walk: local speed versus distance for three requested mean speeds"><img src="assets/figures/timing/crouch_to_walk_margin.svg" loading="lazy" alt="Crouch to walk: schedule margin versus distance; negative is behind the constant-pace reference"></div>
+<figcaption>The six executions from Fig. 8 of the report, redrawn as vector plots. Dashed horizontal lines mark requested means; the dotted vertical line marks the posture change. Positive schedule margin means ahead of a constant-pace reference, negative means behind. Speed uses the original five-sample moving average. Both figures show individual Path Diff executions from the report, not cross-controller averages.</figcaption>
+</figure>
 <p class="reading">Keeping the trained actor fixed, we replace timing feedback with the fixed requested mean, then shuffle that request across tasks. This tests dependence on the temporal input, not independently trained timing representations.</p>
 <div id="timing-table" class="result-table compact"></div>
 <p class="table-note narrow">Original report: 24 paired routes and 144 attempts per setting. Adherence retains all attempts; mean-speed MAE is conditional on first arrival. The same actor is used in all three settings.</p>
@@ -83,11 +100,18 @@
 </section>
 <section class="container section prose" id="scope">
 <p class="section-kicker">Interpretation</p><h2>Scope and limitations</h2>
-<p>The experiments support studying diffusion policies under a route–posture–timing interface, rather than only reproducing velocity-conditioned motion. They also expose limits: task pass can hide an incomplete posture sequence, and better lateral tracking does not imply better performance on every task.</p>
+<p>The experiments examine how motion collected for velocity control can be reused for route, posture and timing control. Task completion, tracking and posture composition do not always improve together: an arrival can hide an incomplete posture sequence, and lower lateral error does not imply better performance on every task.</p>
 <p>All imagery and results shown here are simulated. The comparative bank has been used for development and visual inspection. The three Path Diff runs share an offline prior; they do not represent independent data-collection and imitation runs. This comparison does not establish that diffusion is necessary, that all hierarchies have abrupt transitions, or that the smoothest-looking motion is the most accurate.</p>
 <p>Independent testing, a timing audit of the hierarchy and physical-robot validation remain outstanding. Transition smoothness and controllable intermediate heights are questions to measure, not claims established by these videos.</p>
 </section>
-<section class="container section prose related" id="context"><h2>Research context</h2><p>We build on <a href="https://arxiv.org/abs/2404.19264">DiffuseLoco</a> and <a href="https://arxiv.org/abs/2411.08832">LocoDiff</a>, which study diffusion-based locomotion and multi-skill behaviour. <a href="https://arxiv.org/abs/2506.21853">Skill-Nav</a> studies waypoint-guided locomotion. Our focus is adapting motion collected for velocity control to joint spatial-posture and route-timing requirements, using hindsight labels and <a href="https://arxiv.org/abs/2409.00588">DPPO</a> refinement.</p></section>
+<section class="container section prose related" id="context"><h2>Research context</h2><p>We build on <a href="https://arxiv.org/abs/2404.19264">DiffuseLoco</a> and <a href="https://arxiv.org/abs/2411.08832">LocoDiff</a>, which study diffusion-based locomotion and multi-skill behaviour. <a href="https://arxiv.org/abs/2506.21853">Skill-Nav</a> studies waypoint-guided locomotion. Our focus is adapting motion collected for velocity control to joint spatial-posture and route-timing requirements, using hindsight labels and <a href="https://arxiv.org/abs/2409.00588">DPPO</a> refinement.</p><p>Our main hierarchical comparator is inspired by the skill-selection approach of <a href="https://arxiv.org/abs/2306.14874">ANYmal Parkour</a>. It selects between frozen walking and crouching experts and supplies their velocity commands. This is a task-specific baseline, not a reproduction of the full ANYmal Parkour system.</p></section>
+<section class="container section prose citation" id="citation"><h2>BibTeX</h2><p>To reference this project page:</p><pre><code>@misc{pathdiff2026,
+  title = {Path Diff: Path-Conditioned Diffusion Policies
+           for Quadruped Locomotion},
+  year = {2026},
+  howpublished = {Project page},
+  url = {https://stargix.github.io/path-diff/}
+}</code></pre></section>
 <p id="research-error" class="container error" role="alert" hidden>Some experimental data could not load. Please reload the page.</p>
 </main><footer class="container"><span>Path Diff · Research in progress</span><div><a href="results.html">Evaluation details</a><a href="https://github.com/Stargix/path-diff">Project files ↗</a></div></footer>
 <noscript><p class="container">Enable JavaScript for comparison videos, figures and experimental tables. The method and research description remain available above.</p></noscript>
