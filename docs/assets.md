@@ -16,6 +16,7 @@ Rebuild with NumPy and Matplotlib from the original research checkout (which con
 
 ```powershell
 python site/tools/build_timing_figures.py --source-root <original-research-checkout>
+python site/tools/build_timing_figures.py --source-root <original-research-checkout> --theme light
 ```
 
 The export preserves the original nearest-segment projection, post-step active interval through first arrival, five-sample edge-padded speed smoothing and archived active origins for schedule margin. It does not change experimental metrics. Relative-speed colours saturate at 100% below/above the requested mean. The web figure separates the geometry maps from the speed/margin curves; the duplicate 0.85 m/s route maps in report figure 8 are omitted.

@@ -5,10 +5,10 @@
 <meta property="og:title" content="Path Diff: Path-Conditioned Diffusion Policies for Quadruped Locomotion">
 <meta property="og:description" content="From velocity-conditioned demonstrations to route, posture and timing control. Method, simulation comparisons and experimental results on SOLO12.">
 <title>Path Diff: Path-Conditioned Diffusion Policies for Quadruped Locomotion</title>
-<link rel="stylesheet" href="styles.css?v=20261118-timing"><script src="evidence.js?v=20261118-timing" defer></script><script src="app.js?v=20261118-research" defer></script><script src="research.js?v=20261118-research" defer></script>
+<script src="theme.js?v=20261118-theme"></script><link rel="stylesheet" href="styles.css?v=20261118-theme"><script src="evidence.js?v=20261118-theme" defer></script><script src="app.js?v=20261118-theme" defer></script><script src="research.js?v=20261118-theme" defer></script>
 </head><body>
 <a class="skip" href="#main">Skip to content</a>
-<header><nav class="container" aria-label="Main navigation"><a class="brand" href="#top">Path Diff<span>.</span></a><div><a href="#method">Method</a><a href="#compare">Videos</a><a href="#results">Results</a><a href="results.html">Evaluation details ↗</a></div></nav></header>
+<header><nav class="container" aria-label="Main navigation"><a class="brand" href="#top">Path Diff<span>.</span></a><div><a href="#method">Method</a><a href="#compare">Videos</a><a href="#results">Results</a><a class="nav-details" href="results.html">Evaluation details ↗</a><button id="theme-toggle" class="theme-toggle" type="button" hidden>Light theme</button></div></nav></header>
 <main id="main">
 <section class="intro container" id="top">
 <p class="eyebrow">Path Diff</p><h1>Path-Conditioned Diffusion Policies<br class="desktop-break"> for Quadruped Locomotion</h1>
@@ -51,7 +51,7 @@
 <p class="section-kicker">Comparative results</p><h2>Tracking, completion and posture composition</h2>
 <p class="section-copy">The main table uses moderate-speed requests on the four base route families.<br class="desktop-break"> Higher-speed requests and geometry-stress tests are reported separately.</p>
 <p id="bank-overview" class="data-scope">Loading evaluation bank…</p><div id="system-results" class="result-table"></div>
-<p class="table-note">Mean across three online runs per controller; all attempts in each displayed block are retained. Core and repeated blocks use different requested speeds and should not be subtracted to estimate a composition effect. Original task pass checks arrival, terminal pose, mean speed and average height; tracking-gated pass adds active CTE RMSE ≤10 cm. Active errors include available partial trajectories. Green marks the largest pass-rate mean where the methods differ, not statistical significance.</p>
+<p class="table-note">Mean across three online runs per controller; all attempts in each displayed block are retained. Core and repeated blocks use different requested speeds and should not be subtracted to estimate a composition effect. Original task pass checks arrival, terminal pose, mean speed and average height; tracking-gated pass adds active CTE RMSE ≤10 cm. Active errors include available partial trajectories. Green marks the highest pass rate or lowest error within each block where the methods differ, not statistical significance.</p>
 <p id="system-reading" class="reading"></p>
 <div class="protocol-note"><p><strong>Support and protocol.</strong> These conservative requests are a post-hoc development subset, not proof of identical training support. Crouch was deliberately underrepresented at high speeds in Path Diff's data, and its online constant-crouch requests stopped at 0.4 m/s. The hierarchy retains access to the expert. Decision rates, checkpoint selection and initialization drift also affect the comparison.</p><a href="results.html">Full bank: every tested speed, posture and method ↗</a></div>
 </section>

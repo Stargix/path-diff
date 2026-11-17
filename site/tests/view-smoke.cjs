@@ -25,7 +25,10 @@ const errors=[],context={window:{PathDiffEvidence:E},document,fetch:async url=>(
  assert(nodes.get('composition-table').innerHTML.includes('8 / 8'));
  for(const id of ['single-response','repeated-response']){const content=nodes.get(id).innerHTML;assert.equal((content.match(/<svg /g)||[]).length,2);assert(!/NaN|undefined/.test(content));}
  assert(nodes.get('single-response').innerHTML.includes('-0.6'));assert(nodes.get('repeated-response').innerHTML.includes('4.0'));
+ assert(nodes.get('repeated-response').innerHTML.includes('viewBox="0 0 560 259"'));
+ assert(nodes.get('timing-table').innerHTML.includes('<strong class="winner">2.04</strong>'));
  await vm.runInNewContext(fs.readFileSync(path.join(site,'details.js'),'utf8'),context);
  assert.equal(errors.length,0,String(errors));assert.equal((nodes.get('breakdown').innerHTML.match(/<th scope="row">/g)||[]).length,18);
+ for(const value of ['3.15','1.09','3.45','4.09'])assert(nodes.get('full-bank').innerHTML.includes('<strong class="winner">'+value+'</strong>'),'Highlighted lower error '+value);
  console.log('PASS: four video cases, autoplay, primary/diagnostic tables, all three runs, complete response plots and 18 task/speed rows.');
 })().catch(error=>{console.error(error);process.exitCode=1;});

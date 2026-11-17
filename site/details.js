@@ -9,7 +9,7 @@
  for(const suite of ['core','composition']){
   const rows=E.families.map(family=>({family,...E.aggregate(episodes,actors,family,row=>row.suite===suite)}));
   body+='<tr class="table-group"><th scope="rowgroup" colspan="6">'+(suite==='core'?'Constants & single changes':'Repeated posture changes')+' · '+rows[0].attempts+' attempts per actor</th></tr>';
-  body+=rows.map(row=>'<tr'+(row.family==='diffusion'?' class="ours"':'')+'><th scope="row">'+E.names[row.family]+'</th><td>'+row.attempts+'</td>'+['pass','gate'].map(key=>'<td>'+(E.isBest(row[key],rows.map(r=>r[key]))?'<strong class="winner">'+E.format(row[key])+'</strong>':E.format(row[key]))+'</td>').join('')+'<td>'+E.format(row.cte,2)+'</td><td>'+E.format(row.height,2)+'</td></tr>').join('');
+  body+=rows.map(row=>'<tr'+(row.family==='diffusion'?' class="ours"':'')+'><th scope="row">'+E.names[row.family]+'</th><td>'+row.attempts+'</td>'+['pass','gate'].map(key=>'<td>'+(E.isBest(row[key],rows.map(r=>r[key]))?'<strong class="winner">'+E.format(row[key])+'</strong>':E.format(row[key]))+'</td>').join('')+['cte','height'].map(key=>'<td>'+(E.isLowest(row[key],rows.map(r=>r[key]))?'<strong class="winner">'+E.format(row[key],2)+'</strong>':E.format(row[key],2))+'</td>').join('')+'</tr>').join('');
  }
  table('full-bank',['Controller','Attempts / actor','Original pass (%)','Tracking-gated pass (%)','Active CTE (cm)','Active height MAE (cm)'],body);body='';
  for(const suite of ['core','composition'])for(const speed of (suite==='core'?[.25,.5,.85]:[.35,.65,.85])){

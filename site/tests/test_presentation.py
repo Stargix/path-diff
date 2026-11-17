@@ -22,7 +22,7 @@ class Page(HTMLParser):
 class PresentationTests(unittest.TestCase):
     def test_page_is_not_the_diagnostic_dashboard(self):
         page=Page();page.feed((SITE/'index.html').read_text(encoding='utf-8'))
-        self.assertEqual([src.split('?')[0] for src in page.scripts],['evidence.js','app.js','research.js'])
+        self.assertEqual([src.split('?')[0] for src in page.scripts],['theme.js','evidence.js','app.js','research.js'])
         self.assertTrue({'abstract','method','training-table','timing-table','system-results','single-response','repeated-response'}<=page.ids)
         self.assertNotIn('validation-table',page.ids)
         self.assertNotIn('posture-reference',page.ids)
