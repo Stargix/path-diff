@@ -8,6 +8,7 @@ import argparse
 import csv
 import hashlib
 import json
+from io import StringIO
 from pathlib import Path
 
 import matplotlib
@@ -19,7 +20,7 @@ import numpy as np
 
 SITE = Path(__file__).resolve().parents[1]
 COLORS = {0.35: '#99bee7', 0.65: '#91d1b0', 0.85: '#ddb78f'}
-RELATIVE = LinearSegmentedColormap.from_list('relative', ['#80b2da', '#e6e9e8', '#dfa978'])
+RELATIVE = LinearSegmentedColormap.from_list('relative', ['#78a7cc', '#bcc9c2', '#d5a77e'])
 
 
 def sha(path):
@@ -66,8 +67,11 @@ def active(trace, row, index, dt):
 
 
 def save(fig, name, output):
-    fig.savefig(output / (name + '.svg'), transparent=True, bbox_inches='tight', pad_inches=.12,
+    buffer = StringIO()
+    fig.savefig(buffer, format='svg', transparent=True, bbox_inches='tight', pad_inches=.12,
                 metadata={'Date': None, 'Creator': 'Path Diff archived-report figure export'})
+    svg = '\n'.join(line.rstrip() for line in buffer.getvalue().splitlines()) + '\n'
+    (output / (name + '.svg')).write_text(svg, encoding='utf-8', newline='\n')
     plt.close(fig)
 
 
@@ -78,7 +82,7 @@ def build(root, report, output, data_path, theme='dark'):
     neutral = '#697b85' if light else '#b7c0c6'
     marker = '#52636e' if light else '#cad1d5'
     speed_colors = {0.35: '#2e628e', 0.65: '#216b48', 0.85: '#9c5e2b'} if light else COLORS
-    relative_cmap = LinearSegmentedColormap.from_list('relative_light', ['#367aa5', '#6f818a', '#b7702c']) if light else RELATIVE
+    relative_cmap = LinearSegmentedColormap.from_list('relative_light', ['#477da7', '#778781', '#b17b50']) if light else RELATIVE
     plt.rcParams.update({'font.family': 'sans-serif', 'font.sans-serif': ['DejaVu Sans'],
                          'font.size': 11, 'text.color': foreground, 'axes.labelcolor': foreground,
                          'xtick.color': foreground if light else '#a6afb7',
@@ -153,14 +157,15 @@ def build(root, report, output, data_path, theme='dark'):
         relative = smooth(trace['tangent_speed_m_s'][mask, i]) / .65 - 1
         maps.append({**chosen, 'reference_xy_m': reference.tolist(), 'measured_xy_m': measured.tolist(),
                      'relative_speed': relative.tolist()})
-        fig, ax = plt.subplots(figsize=(3.25, 2.9), layout='constrained')
+        fig, ax = plt.subplots(figsize=(4.6, 2.75), layout='constrained')
         ax.set_facecolor('none')
-        ax.plot(*reference.T, '--', color=('#65727b' if light else '#a8b0b6'), linewidth=1, zorder=1)
+        ax.plot(*reference.T, '--', color=('#526571' if light else '#77858f'), linewidth=1.1, zorder=2)
         segments = np.stack((measured[:-1], measured[1:]), axis=1)
-        collection = LineCollection(segments, cmap=relative_cmap, norm=Normalize(-1, 1), linewidth=2.6)
-        collection.set_array(np.clip(relative[:-1], -1, 1)); ax.add_collection(collection)
-        ax.plot(*reference[0], 'o', markersize=4, markerfacecolor=('#f8faf9' if light else '#101418'), markeredgecolor=marker)
-        ax.plot(*reference[-1], 'x', markersize=5, color=marker)
+        collection = LineCollection(segments, cmap=relative_cmap, norm=Normalize(-.5, .5),
+                                    linewidth=4.4, capstyle='round', zorder=3)
+        collection.set_array(np.clip(relative[:-1], -.5, .5)); ax.add_collection(collection)
+        ax.plot(*reference[0], 'o', markersize=4, markerfacecolor=('#f8faf9' if light else '#101418'), markeredgecolor=marker, zorder=4)
+        ax.plot(*reference[-1], 'x', markersize=5, color=marker, zorder=4)
         ax.autoscale(); ax.margins(.12); ax.set_aspect('equal', adjustable='datalim')
         ax.set(xlabel='Local x (m)', ylabel='Local y (m)')
         ax.grid(alpha=.65, linewidth=.6)
@@ -176,7 +181,7 @@ def build(root, report, output, data_path, theme='dark'):
                'margin': '(projected distance - archived active origin) / requested mean - active elapsed time',
                'temporal_selection': temporal['selection'],
                'geometry_selection': {k: geometry[k] for k in ['ordinary_selection', 'stress_selection', 'selection_uses_outcomes']},
-               'curves': curves, 'geometry': maps}
+               'geometry_colour_limit_relative': .5, 'curves': curves, 'geometry': maps}
     data_path.write_text(json.dumps(payload, separators=(',', ':'), allow_nan=False) + '\n', encoding='utf-8')
     print(f'Exported {len(curves)} timing traces and {len(maps)} geometry maps; no new rollouts.')
 

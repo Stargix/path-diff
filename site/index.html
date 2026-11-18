@@ -5,7 +5,7 @@
 <meta property="og:title" content="Path Diff: Path-Conditioned Diffusion Policies for Quadruped Locomotion">
 <meta property="og:description" content="From velocity-conditioned demonstrations to route, posture and timing control. Method, simulation comparisons and experimental results on SOLO12.">
 <title>Path Diff: Path-Conditioned Diffusion Policies for Quadruped Locomotion</title>
-<script src="theme.js?v=20261118-theme"></script><link rel="stylesheet" href="styles.css?v=20261118-theme"><script src="evidence.js?v=20261118-theme" defer></script><script src="app.js?v=20261118-theme" defer></script><script src="research.js?v=20261118-theme" defer></script>
+<script src="theme.js?v=20261118-pace"></script><link rel="stylesheet" href="styles.css?v=20261118-pace"><script src="evidence.js?v=20261118-theme" defer></script><script src="app.js?v=20261118-theme" defer></script><script src="research.js?v=20261118-theme" defer></script>
 </head><body>
 <a class="skip" href="#main">Skip to content</a>
 <header><nav class="container" aria-label="Main navigation"><a class="brand" href="#top">Path Diff<span>.</span></a><div><a href="#method">Method</a><a href="#compare">Videos</a><a href="#results">Results</a><a class="nav-details" href="results.html">Evaluation details ↗</a><button id="theme-toggle" class="theme-toggle" type="button" hidden>Light theme</button></div></nav></header>
@@ -18,7 +18,7 @@
 <p class="project-status">Ongoing research · SOLO12 in Isaac Lab · Simulation results</p>
 </section>
 <section class="container section prose" id="abstract">
-<p class="section-kicker">Overview</p><h2>Abstract</h2>
+<h2>Abstract</h2>
 <p>Diffusion policies provide a framework for learning locomotion behaviours from offline demonstrations. Existing approaches typically use target velocities or skill commands, while following a route with posture and timing requirements calls for a different task interface. We investigate a path-conditioned diffusion policy for the SOLO12 quadruped, using route geometry, desired base height and target average speed as inputs, without specifying a local speed profile or skill identifier.</p>
 <p>We collect trajectories from velocity-conditioned walking and crouching experts and relabel them with the paths followed and mean speeds achieved. The policy is trained through offline imitation and refined using Diffusion Policy Policy Optimization (DPPO). Experiments in Isaac Lab show that imitation produces a response to the task inputs and refinement improves tracking and joint task completion. Comparisons with a frozen-expert hierarchy and Gaussian imitation with PPO examine the trade-offs in tracking, posture changes and task coverage.</p>
 </section>
@@ -73,20 +73,20 @@
 <p class="table-note equation-note">T* = route length / requested mean speed. The 1.5 m/s limit bounds the conditioning input, not actual robot speed.</p>
 <figure class="native-figure">
 <div class="figure-heading"><h3>Local pace on different geometries</h3><p>Walking · requested mean 0.65 m/s</p></div>
+<div class="pace-color-key" aria-label="Speed colour scale: blue is slower than the requested mean, grey is the requested 0.65 metres per second, orange is faster"><div class="pace-key-labels"><span>Slower</span><span>Requested mean</span><span>Faster</span></div><div class="relative-scale" aria-hidden="true"></div><div class="pace-key-ticks"><span>≤0.325 m/s</span><span>0.65 m/s</span><span>≥0.975 m/s</span></div></div>
 <div class="pace-maps">
-<div><h4>Coherent smooth</h4><img src="assets/figures/timing/coherent_smooth_pace.svg" loading="lazy" alt="Local speed along a smooth route, coloured relative to the requested mean"><p>Mean 0.66 m/s · CTE 3.1 cm</p></div>
-<div><h4>Rounded waypoint</h4><img src="assets/figures/timing/rounded_waypoint_pace.svg" loading="lazy" alt="Local speed along a rounded waypoint route"><p>Mean 0.65 m/s · CTE 3.3 cm</p></div>
-<div><h4>S-curve</h4><img src="assets/figures/timing/ood_s_curve_pace.svg" loading="lazy" alt="Local speed along an S-curve"><p>Mean 0.64 m/s · CTE 4.5 cm</p></div>
-<div><h4>Corner</h4><img src="assets/figures/timing/sweep_hard_turn_pace.svg" loading="lazy" alt="Local speed around a sharp corner"><p>Mean 0.65 m/s · CTE 5.2 cm</p></div>
+<div><h4>Coherent smooth</h4><img src="assets/figures/timing/coherent_smooth_pace.svg" width="342" height="209" loading="lazy" alt="Local speed along a smooth route, coloured relative to the requested mean"><p>Mean 0.66 m/s · CTE 3.1 cm</p></div>
+<div><h4>Rounded waypoint</h4><img src="assets/figures/timing/rounded_waypoint_pace.svg" width="335" height="209" loading="lazy" alt="Local speed along a rounded waypoint route"><p>Mean 0.65 m/s · CTE 3.3 cm</p></div>
+<div><h4>S-curve</h4><img src="assets/figures/timing/ood_s_curve_pace.svg" width="342" height="209" loading="lazy" alt="Local speed along an S-curve"><p>Mean 0.64 m/s · CTE 4.5 cm</p></div>
+<div><h4>Corner</h4><img src="assets/figures/timing/sweep_hard_turn_pace.svg" width="342" height="210" loading="lazy" alt="Local speed around a sharp corner"><p>Mean 0.65 m/s · CTE 5.2 cm</p></div>
 </div>
-<div class="relative-legend"><span>Slower</span><span class="relative-scale" aria-hidden="true"></span><span>Faster</span><small>−100% · requested mean · +100%</small></div>
-<figcaption>The four executions from Fig. 7 of the I2R report. Colour shows route-tangent speed relative to the requested mean, clipped at ±100%; dashed curves are reference paths. Local speed varies with geometry even when the achieved route mean is close to the request.</figcaption>
+<figcaption>The four executions from Fig. 7 of the I2R report. The thick coloured line shows measured motion; the thin dashed line is the reference path. Colour indicates route-tangent speed on the same scale in all four maps, saturated outside ±50% of the requested 0.65 m/s. Local speed varies with geometry even when the achieved route mean is close to the request.</figcaption>
 </figure>
 <figure class="native-figure">
 <div class="figure-heading"><h3>Speed and timing through a posture change</h3><p>Same route · height changes at 2 m</p></div>
 <div class="speed-legend"><span class="slow">0.35 m/s</span><span class="medium">0.65 m/s</span><span class="fast">0.85 m/s</span></div>
-<h4 class="timing-direction">Walk to crouch</h4><div class="timing-curves"><img src="assets/figures/timing/walk_to_crouch_speed.svg" loading="lazy" alt="Walk to crouch: local speed versus distance for three requested mean speeds"><img src="assets/figures/timing/walk_to_crouch_margin.svg" loading="lazy" alt="Walk to crouch: schedule margin versus distance; positive is ahead of the constant-pace reference"></div>
-<h4 class="timing-direction">Crouch to walk</h4><div class="timing-curves"><img src="assets/figures/timing/crouch_to_walk_speed.svg" loading="lazy" alt="Crouch to walk: local speed versus distance for three requested mean speeds"><img src="assets/figures/timing/crouch_to_walk_margin.svg" loading="lazy" alt="Crouch to walk: schedule margin versus distance; negative is behind the constant-pace reference"></div>
+<h4 class="timing-direction">Walk to crouch</h4><div class="timing-curves"><img src="assets/figures/timing/walk_to_crouch_speed.svg" width="389" height="198" loading="lazy" alt="Walk to crouch: local speed versus distance for three requested mean speeds"><img src="assets/figures/timing/walk_to_crouch_margin.svg" width="389" height="198" loading="lazy" alt="Walk to crouch: schedule margin versus distance; positive is ahead of the constant-pace reference"></div>
+<h4 class="timing-direction">Crouch to walk</h4><div class="timing-curves"><img src="assets/figures/timing/crouch_to_walk_speed.svg" width="389" height="198" loading="lazy" alt="Crouch to walk: local speed versus distance for three requested mean speeds"><img src="assets/figures/timing/crouch_to_walk_margin.svg" width="389" height="198" loading="lazy" alt="Crouch to walk: schedule margin versus distance; negative is behind the constant-pace reference"></div>
 <figcaption>The six executions from Fig. 8 of the report, redrawn as vector plots. Dashed horizontal lines mark requested means; the dotted vertical line marks the posture change. Positive schedule margin means ahead of a constant-pace reference, negative means behind. Speed uses the original five-sample moving average. Both figures show individual Path Diff executions from the report, not cross-controller averages.</figcaption>
 </figure>
 <p class="reading">Keeping the trained actor fixed, we replace timing feedback with the fixed requested mean, then shuffle that request across tasks. This tests dependence on the temporal input, not independently trained timing representations.</p>
@@ -106,10 +106,13 @@
 </section>
 <section class="container section prose related" id="context"><h2>Research context</h2><p>We build on <a href="https://arxiv.org/abs/2404.19264">DiffuseLoco</a> and <a href="https://arxiv.org/abs/2411.08832">LocoDiff</a>, which study diffusion-based locomotion and multi-skill behaviour. <a href="https://arxiv.org/abs/2506.21853">Skill-Nav</a> studies waypoint-guided locomotion. Our focus is adapting motion collected for velocity control to joint spatial-posture and route-timing requirements, using hindsight labels and <a href="https://arxiv.org/abs/2409.00588">DPPO</a> refinement.</p><p>Our main hierarchical comparator is inspired by the skill-selection approach of <a href="https://arxiv.org/abs/2306.14874">ANYmal Parkour</a>. It selects between frozen walking and crouching experts and supplies their velocity commands. This is a task-specific baseline, not a reproduction of the full ANYmal Parkour system.</p></section>
 <section class="container section prose citation" id="citation"><h2>BibTeX</h2><p>To reference this project page:</p><pre><code>@misc{pathdiff2026,
-  title = {Path Diff: Path-Conditioned Diffusion Policies
+  title = {Path-Conditioned Diffusion Policies
            for Quadruped Locomotion},
+  author = {Flores Marín, Sergi and Beltrán Perelló, Jordi
+            and Vallvé Navarro, Joan},
   year = {2026},
   howpublished = {Project page},
+  note = {Research in progress},
   url = {https://stargix.github.io/path-diff/}
 }</code></pre></section>
 <p id="research-error" class="container error" role="alert" hidden>Some experimental data could not load. Please reload the page.</p>
