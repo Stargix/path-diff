@@ -27,5 +27,5 @@
 [data-theme=light] .pace-color-key .relative-scale{background:linear-gradient(90deg,#146eb6,#627785,#b65016)}
 @media(max-width:600px){.pace-maps{grid-template-columns:1fr;max-width:460px;gap:24px}.pace-maps h4{font-size:14px}.pace-maps p{font-size:11px}.pace-color-key{font-size:10px;max-width:330px}}
 .pace-maps{max-width:none;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}.pace-color-key .relative-scale{background:linear-gradient(90deg,#78a7cc,#bcc9c2,#d5a77e)}[data-theme=light] .pace-color-key .relative-scale{background:linear-gradient(90deg,#477da7,#778781,#b17b50)}
-@media(max-width:850px){.pace-maps{grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 12px}}
+@media(max-width:600px){.pace-maps{grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 12px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
