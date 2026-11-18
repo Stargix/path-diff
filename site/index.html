@@ -5,7 +5,7 @@
 <meta property="og:title" content="Path Diff: Path-Conditioned Diffusion Policies for Quadruped Locomotion">
 <meta property="og:description" content="From velocity-conditioned demonstrations to route, posture and timing control. Method, simulation comparisons and experimental results on SOLO12.">
 <title>Path Diff: Path-Conditioned Diffusion Policies for Quadruped Locomotion</title>
-<script src="theme.js?v=20261118-pace"></script><link rel="stylesheet" href="styles.css?v=20261118-row"><script src="evidence.js?v=20261118-theme" defer></script><script src="app.js?v=20261118-theme" defer></script><script src="research.js?v=20261118-theme" defer></script>
+<script src="theme.js?v=20261118-pace"></script><link rel="stylesheet" href="styles.css?v=20261118-report"><script src="evidence.js?v=20261118-theme" defer></script><script src="app.js?v=20261118-theme" defer></script><script src="research.js?v=20261118-theme" defer></script>
 </head><body>
 <a class="skip" href="#main">Skip to content</a>
 <header><nav class="container" aria-label="Main navigation"><a class="brand" href="#top">Path Diff<span>.</span></a><div><a href="#method">Method</a><a href="#compare">Videos</a><a href="#results">Results</a><a class="nav-details" href="results.html">Evaluation details ↗</a><button id="theme-toggle" class="theme-toggle" type="button" hidden>Light theme</button></div></nav></header>
@@ -13,7 +13,7 @@
 <section class="intro container" id="top">
 <p class="eyebrow">Path Diff</p><h1>Path-Conditioned Diffusion Policies<br class="desktop-break"> for Quadruped Locomotion</h1>
 <p class="lead">From velocity-conditioned demonstrations to<br class="desktop-break"> route, posture and timing control.</p>
-<div class="hero-links"><a class="resource primary" href="#method">Explore the method ↓</a><a class="resource" href="https://github.com/Stargix/isaaclab-solo-diffusion-policies">Implementation ↗</a></div>
+<div class="hero-links"><a class="resource primary" href="#method">Explore the method ↓</a><a class="resource" href="https://github.com/Stargix/isaaclab-solo-diffusion-policies">Implementation ↗</a><a class="resource" href="assets/i2r-report.pdf">Previous report (I2R) ↗</a></div>
 <figure class="teaser"><div class="teaser-media"><video src="assets/media/teaser_recreated_short.mp4" autoplay muted loop playsinline preload="metadata" aria-label="SOLO12 follows a curved route and changes posture in Isaac Lab"></video></div><figcaption>A single controller follows the route, changes posture and adjusts its pace.<br>Illustrative simulation at a requested mean of 0.55 m/s.</figcaption></figure>
 <p class="project-status">Ongoing research · SOLO12 in Isaac Lab · Simulation results</p>
 </section>
@@ -43,9 +43,9 @@
 </section>
 <section class="container section" id="learning-stages">
 <p class="section-kicker">Learning the task</p><h2>Imitation and online refinement</h2>
-<p class="section-copy">The offline policy produces locomotion and responds to the new inputs, but rarely meets all requirements together. Refinement improves joint completion on the original report benchmark.</p>
+<p class="section-copy">The offline policy produces locomotion and responds to the new inputs, but rarely meets all requirements together. Refinement improves joint completion on the evaluation benchmark.</p>
 <div id="training-table" class="result-table compact"></div>
-<p class="table-note narrow">Original I2R experiment, separate from the comparative bank below. Adherence combines the original task criterion with active lateral RMSE ≤10 cm. Refined values average three online runs sharing an offline prior; the imitation row is the initial policy.</p>
+<p class="table-note narrow">This evaluation is separate from the comparative bank below. Adherence combines the task criterion with active lateral RMSE ≤10 cm. Refined values average three online runs sharing an offline prior; the imitation row is the initial policy.</p>
 </section>
 <section class="container section" id="results">
 <p class="section-kicker">Comparative results</p><h2>Tracking, completion and posture composition</h2>
@@ -80,18 +80,18 @@
 <div><h4>S-curve</h4><img src="assets/figures/timing/ood_s_curve_pace.svg" width="342" height="209" loading="lazy" alt="Local speed along an S-curve"><p>Mean 0.64 m/s · CTE 4.5 cm</p></div>
 <div><h4>Corner</h4><img src="assets/figures/timing/sweep_hard_turn_pace.svg" width="342" height="210" loading="lazy" alt="Local speed around a sharp corner"><p>Mean 0.65 m/s · CTE 5.2 cm</p></div>
 </div>
-<figcaption>The four executions from Fig. 7 of the I2R report. The thick coloured line shows measured motion; the thin dashed line is the reference path. Colour indicates route-tangent speed on the same scale in all four maps, saturated outside ±50% of the requested 0.65 m/s. Local speed varies with geometry even when the achieved route mean is close to the request.</figcaption>
+<figcaption>Four illustrative executions. The thick coloured line shows measured motion; the thin dashed line is the reference path. Colour indicates route-tangent speed on the same scale in all four maps, saturated outside ±50% of the requested 0.65 m/s. Local speed varies with geometry even when the achieved route mean is close to the request.</figcaption>
 </figure>
 <figure class="native-figure">
 <div class="figure-heading"><h3>Speed and timing through a posture change</h3><p>Same route · height changes at 2 m</p></div>
 <div class="speed-legend"><span class="slow">0.35 m/s</span><span class="medium">0.65 m/s</span><span class="fast">0.85 m/s</span></div>
 <h4 class="timing-direction">Walk to crouch</h4><div class="timing-curves"><img src="assets/figures/timing/walk_to_crouch_speed.svg" width="389" height="198" loading="lazy" alt="Walk to crouch: local speed versus distance for three requested mean speeds"><img src="assets/figures/timing/walk_to_crouch_margin.svg" width="389" height="198" loading="lazy" alt="Walk to crouch: schedule margin versus distance; positive is ahead of the constant-pace reference"></div>
 <h4 class="timing-direction">Crouch to walk</h4><div class="timing-curves"><img src="assets/figures/timing/crouch_to_walk_speed.svg" width="389" height="198" loading="lazy" alt="Crouch to walk: local speed versus distance for three requested mean speeds"><img src="assets/figures/timing/crouch_to_walk_margin.svg" width="389" height="198" loading="lazy" alt="Crouch to walk: schedule margin versus distance; negative is behind the constant-pace reference"></div>
-<figcaption>The six executions from Fig. 8 of the report, redrawn as vector plots. Dashed horizontal lines mark requested means; the dotted vertical line marks the posture change. Positive schedule margin means ahead of a constant-pace reference, negative means behind. Speed uses the original five-sample moving average. Both figures show individual Path Diff executions from the report, not cross-controller averages.</figcaption>
+<figcaption>Six illustrative executions. Dashed horizontal lines mark requested means; the dotted vertical line marks the posture change. Positive schedule margin means ahead of a constant-pace reference, negative means behind. Speed uses a five-sample moving average. Both figures show individual Path Diff executions, not cross-controller averages.</figcaption>
 </figure>
 <p class="reading">Keeping the trained actor fixed, we replace timing feedback with the fixed requested mean, then shuffle that request across tasks. This tests dependence on the temporal input, not independently trained timing representations.</p>
 <div id="timing-table" class="result-table compact"></div>
-<p class="table-note narrow">Original report: 24 paired routes and 144 attempts per setting. Adherence retains all attempts; mean-speed MAE is conditional on first arrival. The same actor is used in all three settings.</p>
+<p class="table-note narrow">24 paired routes and 144 attempts per setting. Adherence retains all attempts; mean-speed MAE is conditional on first arrival. The same actor is used in all three settings.</p>
 </section>
 <section class="container section" id="evaluation-scope">
 <p class="section-kicker">Geometry and scope</p><h2>Base routes and geometry-stress tests</h2>
