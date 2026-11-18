@@ -13,6 +13,7 @@ class TimingFigureTests(unittest.TestCase):
         self.assertFalse(data['new_rollouts'])
         self.assertFalse(data['selection_changed'])
         self.assertEqual(data['speed_smoothing_samples'], 5)
+        self.assertEqual(data['geometry_colour_limit_relative'], .5)
         self.assertEqual([c['scenario'] for c in data['curves']], [11, 111, 211, 61, 161, 261])
         self.assertEqual([c['scenario'] for c in data['geometry']], [993, 1468, 0, 556])
         for curve in data['curves']:
@@ -38,6 +39,12 @@ class TimingFigureTests(unittest.TestCase):
         self.assertIn('@misc{pathdiff2026', html)
         self.assertIn('https://arxiv.org/abs/2306.14874', html)
         self.assertIn('not a reproduction', html)
+        self.assertNotIn('>Overview<', html)
+        self.assertIn('author = {Flores Marín, Sergi and Beltrán Perelló, Jordi', html)
+        self.assertIn('and Vallvé Navarro, Joan}', html)
+        self.assertIn('title = {Path-Conditioned Diffusion Policies', html)
+        self.assertIn('≤0.325 m/s', html)
+        self.assertIn('≥0.975 m/s', html)
 
     def test_no_em_dash_in_site_text(self):
         for suffix in ['*.html', '*.js', '*.css', '*.md']:

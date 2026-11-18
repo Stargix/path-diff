@@ -23,12 +23,12 @@ test('dark is the initial theme and the control is progressively enabled',()=>{
 test('stored light preference is applied before first paint',()=>{
  const page=boot('light');assert.equal(page.root.dataset.theme,'light');
  page.ready();assert.equal(page.button.attrs['aria-label'],'Switch to dark theme');
- assert.equal(page.image.src,'assets/figures/timing/light/walk_to_crouch_speed.svg');
+ assert.equal(page.image.src,'assets/figures/timing/light/walk_to_crouch_speed.svg?v=20261118-pace');
 });
 test('theme and chart assets switch in both directions without changing data',()=>{
  const page=boot();page.ready();page.click();assert.equal(page.root.dataset.theme,'light');
  assert.equal(page.saved(),'light');page.click();assert.equal(page.root.dataset.theme,'dark');
- assert.equal(page.image.src,'assets/figures/timing/walk_to_crouch_speed.svg');assert.equal(page.saved(),'dark');
+ assert.equal(page.image.src,'assets/figures/timing/walk_to_crouch_speed.svg?v=20261118-pace');assert.equal(page.saved(),'dark');
 });
 test('preference survives a second page load',()=>{
  const first=boot();first.ready();first.click();const next=boot(first.saved());

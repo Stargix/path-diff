@@ -16,7 +16,8 @@
   document.querySelectorAll('img[src^="assets/figures/timing/"]').forEach(image=>{
    const dark=image.dataset.darkSrc||(image.dataset.darkSrc=image.getAttribute('src'));
    const source=theme==='light'?dark.replace('/timing/','/timing/light/'):dark;
-   if(image.getAttribute('src')!==source)image.setAttribute('src',source);
+   const versioned=source+'?v=20261118-pace';
+   if(image.getAttribute('src')!==versioned)image.setAttribute('src',versioned);
   });
  }
  function init(){
